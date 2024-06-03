@@ -6,6 +6,7 @@ date: "2024-06-15"
 format: 
   revealjs:
     scrollable: true
+    output-file: ppt.html
 editor: visual
 ---
 

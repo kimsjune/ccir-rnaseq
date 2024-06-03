@@ -6,6 +6,7 @@ date: "2024-06-15"
 format: 
   revealjs:
     scrollable: true
+    output-file: ppt.html
 editor: visual
 ---
 
@@ -153,13 +154,18 @@ Tips
 
 ## Downloading these files to our HPC
 
+First, let's create a new directory somewhere to save our files  
+
 ```{sh}
 cd project/$USER
 mkdir workshop
 cd workshop
 ```
 
+
 Question: what is your current directory?
+
+`wget` is a command we can use to download files over the internet
 
 ```{sh}
 wget https://hgdownload.cse.ucsc.edu/goldenpath/mm10/bigZips/mm10.fa.gz
