@@ -1,0 +1,32 @@
+{
+    "id": "7980AB51",
+    "path": "~/Lab2/bioinformatics2024/week1/intro.qmd",
+    "project_path": "intro.qmd",
+    "type": "quarto_markdown",
+    "hash": "0",
+    "contents": "",
+    "dirty": true,
+    "created": 1717423669397.0,
+    "source_on_save": true,
+    "relative_order": 1,
+    "properties": {
+        "rmdVisualMode": "false",
+        "rmdVisualWrapConfigured": "true",
+        "tempName": "Untitled1",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "166,66",
+        "scrollLine": "144",
+        "docOutlineVisible": "1",
+        "rmdVisualCollapsedChunks": "",
+        "rmdVisualModeLocation": "1519:2273"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1717430260,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1717430334482,
+    "read_only": false,
+    "read_only_alternatives": []
+}

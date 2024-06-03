@@ -1,0 +1,167 @@
+---
+title: Intro to RNA-seq analysis
+subtitle: "Week 1"
+author: Joon Kim
+date: "2024-06-15"
+format: 
+  revealjs:
+    scrollable: true
+editor: visual
+---
+
+## Plan
+
+1.  Intro to RNA-seq analysis (today)\
+2.  RNA-seq pt 1
+    -   indexing the genome
+    -   read alignment
+    -   counting
+3.  RNA-seq pt 2
+    -   differential gene expression with edgeR
+4.  RNA-seq pt 3
+    -   visualization
+
+## Overview
+
+::: {.column width="30%"}
+[Sample 1]{.underline}\
+..ATGCTAGATCG...\
+...GGTACTACT...
+
+[Sample 2]{.underline}\
+..TGGTGTGCTG...\
+...GCTAGCTGCA...
+
+| Gene | Sample 1 | Sample 2 | ... |
+|------|:--------:|:--------:|-----|
+| XYZ  |   1234   |   4312   | ... |
+| ...  |    12    |    44    | ... |
+:::
+
+![](vc.vol.fibrosis_IPF_v_central_NSIP.fixAxis.png){.absolute top="150" right="50" width="400"}
+
+## Not within the scope
+
+-   when/why you should or shouldn't do RNA-seq\
+-   how to purify RNA and send to sequencing\
+-   core facility jobs
+    -   RNA-seq library generation
+    -   Illumina sequencing technology (ex. bridge amplification)
+
+## Two phases to RNA-seq analysis
+
++----------------------+----------------+---------------------+
+| Step                 | Environment    | Rationale           |
++======================+================+=====================+
+| reads ➡️ count table  | HPC            | -   large file size |
+|                      |                |                     |
+|                      |                | -   high compute    |
+|                      |                |                     |
+|                      |                | -   non-interactive |
++----------------------+----------------+---------------------+
+| count table ➡️ plots  | local          | -   small file size |
+|                      |                |                     |
+|                      |                | -   low compute     |
+|                      |                |                     |
+|                      |                | -   interactive     |
++----------------------+----------------+---------------------+
+
+: {tbl-colwidths="\[50,30,50\]"}
+
+## Working on a high computing cluster (HPC)
+
+-   A big challenge to learning bioinformatics is the lack of graphical user interfaces (GUI).\
+
+-   Instead we have to use the command-line interface (CLI).
+
+-   To process `reads` into a `count table`, we need to use a HPC at a remote location.\
+
+-   To do this, we log in to our HPC using a secure shell (`ssh`).
+
+## A HPC \@ Waterloo: Graham
+
+![](justin-wan-with-graham-selfie.webp)
+
+![](amin.jpeg){width=10%} --> `ssh` --> Graham
+
+## Logging into `graham` through Terminal/Command Prompt
+
+:::{.callout-warning}
+Change `skim823` with your username!
+:::
+
+```{sh}
+ssh skim823@graham.computecanada.ca
+```
+
+## Linux terminal basics
+:::: {.columns}
+
+::: {.column width="30%"}
+
+Basic commands  
+- `pwd`  
+- `ls`    
+- `cd`  
+- `cp`  
+- `mv`  
+- `mkdir`  
+- `touch`  
+- `rm`
+- `cat`  
+- `head`  
+- `tail`  
+
+:::
+
+::: {.column width="70%"}
+
+Tips  
+- `tab` to "auto" complete  
+- `ctrl/cmd + c` to abort  
+- `ctrl/cmd + a` to move the cursor to the beginning  
+- `ctrl/cmd + e` to move the cursor to the end  
+- `ctrl/cmd + l` to clear the screen  
+
+:::
+::::
+
+
+## Workflow on the HPC side
+
+
+:::: {.columns}
+
+::: {.column width="40%"}
+
+![](mermaid-diagram-2024-06-03-114302.svg)
+
+:::
+
+::: {.column width="60%"}
+
+- we need at least (and at most) three kinds of files: `genome` `.fa` file, `genes` `.gtf/.gff` file and `reads` `.fq.gz` files.  
+    - hopefully you got your `reads.fq.gz` from your sequencing core  
+    - `genome` is the reference build of your organism
+        - ex. mm10, mm39, hg38
+    - `genes` contains coordinates (among others) to all genes of that genome  
+    - you have to make sure they match
+    
+:::
+
+::::
+
+## Downloading these files to our HPC
+
+```{sh}
+cd project/$USER
+mkdir workshop
+cd workshop
+```
+
+Question: what is your current directory?
+
+```{sh}
+wget https://hgdownload.cse.ucsc.edu/goldenpath/mm10/bigZips/mm10.fa.gz
+wget https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M1/gencode.vM1.annotation.gtf.gz
+```
