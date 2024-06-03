@@ -1,0 +1,7 @@
+project:
+  output-dir: _slides
+  render:
+    - index.qmd
+    - intro.qmd
+    - summary.qmd
+    - references.qmd
