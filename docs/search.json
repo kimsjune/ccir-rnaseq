@@ -1,0 +1,72 @@
+[
+  {
+    "objectID": "week1/page-reveal.html#plan",
+    "href": "week1/page-reveal.html#plan",
+    "title": "Intro to RNA-seq analysis",
+    "section": "Plan",
+    "text": "Plan\n\nIntro to RNA-seq analysis (today)\n\nRNA-seq pt 1\n\nindexing the genome\nread alignment\ncounting\n\nRNA-seq pt 2\n\ndifferential gene expression with edgeR\n\nRNA-seq pt 3\n\nvisualization"
+  },
+  {
+    "objectID": "week1/page-reveal.html#overview",
+    "href": "week1/page-reveal.html#overview",
+    "title": "Intro to RNA-seq analysis",
+    "section": "Overview",
+    "text": "Overview\n\nSample 1\n..ATGCTAGATCG…\n…GGTACTACT…\nSample 2\n..TGGTGTGCTG…\n…GCTAGCTGCA…\n\n\n\nGene\nSample 1\nSample 2\n…\n\n\n\n\nXYZ\n1234\n4312\n…\n\n\n…\n12\n44\n…"
+  },
+  {
+    "objectID": "week1/page-reveal.html#not-within-the-scope",
+    "href": "week1/page-reveal.html#not-within-the-scope",
+    "title": "Intro to RNA-seq analysis",
+    "section": "Not within the scope",
+    "text": "Not within the scope\n\nwhen/why you should or shouldn’t do RNA-seq\n\nhow to purify RNA and send to sequencing\n\ncore facility jobs\n\nRNA-seq library generation\nIllumina sequencing technology (ex. bridge amplification)"
+  },
+  {
+    "objectID": "week1/page-reveal.html#two-phases-to-rna-seq-analysis",
+    "href": "week1/page-reveal.html#two-phases-to-rna-seq-analysis",
+    "title": "Intro to RNA-seq analysis",
+    "section": "Two phases to RNA-seq analysis",
+    "text": "Two phases to RNA-seq analysis\n\n\n\n\n\n\n\n\nStep\nEnvironment\nRationale\n\n\n\n\nreads ➡️ count table\nHPC\n\nlarge file size\nhigh compute\nnon-interactive\n\n\n\ncount table ➡️ plots\nlocal\n\nsmall file size\nlow compute\ninteractive"
+  },
+  {
+    "objectID": "week1/page-reveal.html#working-on-a-high-computing-cluster-hpc",
+    "href": "week1/page-reveal.html#working-on-a-high-computing-cluster-hpc",
+    "title": "Intro to RNA-seq analysis",
+    "section": "Working on a high computing cluster (HPC)",
+    "text": "Working on a high computing cluster (HPC)\n\nA big challenge to learning bioinformatics is the lack of graphical user interfaces (GUI).\n\nInstead we have to use the command-line interface (CLI).\nTo process reads into a count table, we need to use a HPC at a remote location.\n\nTo do this, we log in to our HPC using a secure shell (ssh)."
+  },
+  {
+    "objectID": "week1/page-reveal.html#a-hpc-waterloo-graham",
+    "href": "week1/page-reveal.html#a-hpc-waterloo-graham",
+    "title": "Intro to RNA-seq analysis",
+    "section": "A HPC @ Waterloo: Graham",
+    "text": "A HPC @ Waterloo: Graham\n\n –&gt; ssh –&gt; Graham"
+  },
+  {
+    "objectID": "week1/page-reveal.html#logging-into-graham-through-terminalcommand-prompt",
+    "href": "week1/page-reveal.html#logging-into-graham-through-terminalcommand-prompt",
+    "title": "Intro to RNA-seq analysis",
+    "section": "Logging into graham through Terminal/Command Prompt",
+    "text": "Logging into graham through Terminal/Command Prompt\n\n\n\n\n\n\nWarning\n\n\nChange skim823 with your username!\n\n\n\nssh skim823@graham.computecanada.ca"
+  },
+  {
+    "objectID": "week1/page-reveal.html#linux-terminal-basics",
+    "href": "week1/page-reveal.html#linux-terminal-basics",
+    "title": "Intro to RNA-seq analysis",
+    "section": "Linux terminal basics",
+    "text": "Linux terminal basics\n\n\nBasic commands\n- pwd\n- ls\n- cd\n- cp\n- mv\n- mkdir\n- touch\n- rm - cat\n- head\n- tail\n\nTips\n- tab to “auto” complete\n- ctrl/cmd + c to abort\n- ctrl/cmd + a to move the cursor to the beginning\n- ctrl/cmd + e to move the cursor to the end\n- ctrl/cmd + l to clear the screen"
+  },
+  {
+    "objectID": "week1/page-reveal.html#workflow-on-the-hpc-side",
+    "href": "week1/page-reveal.html#workflow-on-the-hpc-side",
+    "title": "Intro to RNA-seq analysis",
+    "section": "Workflow on the HPC side",
+    "text": "Workflow on the HPC side\n\n\n\n\n\nwe need at least (and at most) three kinds of files: genome .fa file, genes .gtf/.gff file and reads .fq.gz files.\n\nhopefully you got your reads.fq.gz from your sequencing core\n\ngenome is the reference build of your organism\n\nex. mm10, mm39, hg38\n\ngenes contains coordinates (among others) to all genes of that genome\n\nyou have to make sure they match"
+  },
+  {
+    "objectID": "week1/page-reveal.html#downloading-these-files-to-our-hpc",
+    "href": "week1/page-reveal.html#downloading-these-files-to-our-hpc",
+    "title": "Intro to RNA-seq analysis",
+    "section": "Downloading these files to our HPC",
+    "text": "Downloading these files to our HPC\nFirst, let’s create a new directory somewhere to save our files\ncd project/$USER\nmkdir workshop\ncd workshop\nQuestion: what is your current directory?\nwget is a command we can use to download files over the internet\nwget https://hgdownload.cse.ucsc.edu/goldenpath/mm10/bigZips/mm10.fa.gz\nwget https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M1/gencode.vM1.annotation.gtf.gz"
+  }
+]
