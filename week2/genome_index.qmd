@@ -56,7 +56,12 @@ ssh skim823@graham.computecanada.ca
 cd /home/$USER/project/$USER/workshop
 pwd # Check where we are
 ```
-Our files are `gz`ipped (compressed). So they have to be un-zipped with `gzip`.
+:::
+
+Our files are `gz`ipped (compressed). So they have to be un-zipped with `gzip`.  
+
+::: {.big-code}
+
 ```{bash}
 gzip --help
 ```
@@ -68,4 +73,5 @@ ls -l
 ```
 
 :::
+
 

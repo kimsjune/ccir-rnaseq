@@ -116,6 +116,6 @@
     "href": "week2/genome_index.html#setup",
     "title": "A primer on RNA-seq analysis",
     "section": "Setup",
-    "text": "Setup\n\n\n# This is a comment; it does not get executed.\n# Log in to Graham\nssh skim823@graham.computecanada.ca\n\n\n# Remember where we downloaded our files?\ncd /home/$USER/project/$USER/workshop\npwd # Check where we are\n\nOur files are gzipped (compressed). So they have to be un-zipped with gzip.\n\ngzip --help\n\n\ngzip -c mm10.fa.gz\ngzip -c gencode.vM1.annotation.gtf.gz\n# Are the files there?\nls -l"
+    "text": "Setup\n\n\n# This is a comment; it does not get executed.\n# Log in to Graham\nssh skim823@graham.computecanada.ca\n\n\n# Remember where we downloaded our files?\ncd /home/$USER/project/$USER/workshop\npwd # Check where we are\n\n\nOur files are gzipped (compressed). So they have to be un-zipped with gzip.\n\n\ngzip --help\n\n\ngzip -c mm10.fa.gz\ngzip -c gencode.vM1.annotation.gtf.gz\n# Are the files there?\nls -l"
   }
 ]
