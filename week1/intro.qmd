@@ -111,9 +111,10 @@ include-in-header:
 ## A HPC \@ Waterloo: Graham
 
 ![](justin-wan-with-graham-selfie.webp){width="70%"}\
--   it's a big freaking computer\
--   we can't drive over to Waterloo every time\
--   We can log in to `graham` from our computer using `ssh`
+
+-  it's a big freaking computer  
+-  we can't drive over to Waterloo every time  
+-  We can log in to `graham` from our computer using `ssh`  
 
 ## Logging into `graham` through Terminal/Command Prompt
 
@@ -121,17 +122,22 @@ include-in-header:
 Change `skim823` with your username!
 :::
 
-<!-- ```{css echo=FALSE, eval=TRUE} -->
-<!-- .big-code{ -->
-<!--   font-size: 200%   -->
-<!-- } -->
-<!-- ``` -->
+<br>
 
 ::: big-code
+
 ```{bash echo=TRUE, eval=FALSE}
 ssh skim823@graham.computecanada.ca
 ```
+
 :::
+
+<br>
+
+-  Prompts you with "are you sure blah blah?"; type `yes`
+-  Prompts with your password; what you type is invisible for security  
+-  Prompts you with MFA (*annoying*)  
+
 
 ## Linux terminal basics
 
@@ -186,25 +192,33 @@ Tips\
 
 ## Downloading these files to our HPC
 
-First, let's create a new directory somewhere to save our files
+First, let's create a new directory somewhere to save our files\
+
+<br>
 
 ::: big-code
+
 ```{bash}
 cd /home/$USER/project/$USER
 mkdir workshop
 cd workshop
 ```
+
 :::
+
+<br>
 
 Question: what is your current directory?
 
 `wget` is a command we can use to download files over the internet
 
 ::: big-code
+
 ```{bash}
 wget https://hgdownload.cse.ucsc.edu/goldenpath/mm10/bigZips/mm10.fa.gz
 wget https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M1/gencode.vM1.annotation.gtf.gz
 ```
+
 :::
 
 ## Downloading these files to our HPC
@@ -264,7 +278,7 @@ wget https://github.com/kimsjune/ccir-bioinformatics2024/tree/main/week1/DKO_D1_
 [DRAC wiki](https://docs.alliancecan.ca/wiki/Technical_documentation)  
 [Youtube](https://www.youtube.com/watch?v=IiAbxPZ3BHo)  
 
-- command-line stuff (`bash`)
+- command-line stuff (`bash`)  
 [basic commmands](https://mally.stanford.edu/~sr/computing/basic-unix.html)    
 [basic commands](https://www.geeksforgeeks.org/essential-linuxunix-commands/)  
 (network stuff not relevant)

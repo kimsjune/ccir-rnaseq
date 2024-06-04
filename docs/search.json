@@ -46,14 +46,14 @@
     "href": "week1/intro.html#a-hpc-waterloo-graham",
     "title": "A primer on RNA-seq analysis",
     "section": "A HPC @ Waterloo: Graham",
-    "text": "A HPC @ Waterloo: Graham\n\n- it’s a big freaking computer\n- we can’t drive over to Waterloo every time\n- We can log in to graham from our computer using ssh"
+    "text": "A HPC @ Waterloo: Graham\n\n\n\nit’s a big freaking computer\n\nwe can’t drive over to Waterloo every time\n\nWe can log in to graham from our computer using ssh"
   },
   {
     "objectID": "week1/intro.html#logging-into-graham-through-terminalcommand-prompt",
     "href": "week1/intro.html#logging-into-graham-through-terminalcommand-prompt",
     "title": "A primer on RNA-seq analysis",
     "section": "Logging into graham through Terminal/Command Prompt",
-    "text": "Logging into graham through Terminal/Command Prompt\n\n\n\n\n\n\nWarning\n\n\nChange skim823 with your username!\n\n\n\n\n\n\n\n\n\n\nssh skim823@graham.computecanada.ca"
+    "text": "Logging into graham through Terminal/Command Prompt\n\n\n\n\n\n\nWarning\n\n\nChange skim823 with your username!\n\n\n\n\n\n\nssh skim823@graham.computecanada.ca\n\n\n\n\nPrompts you with “are you sure blah blah?”; type yes\nPrompts with your password; what you type is invisible for security\n\nPrompts you with MFA (annoying)"
   },
   {
     "objectID": "week1/intro.html#linux-terminal-basics",
@@ -74,7 +74,7 @@
     "href": "week1/intro.html#downloading-these-files-to-our-hpc",
     "title": "A primer on RNA-seq analysis",
     "section": "Downloading these files to our HPC",
-    "text": "Downloading these files to our HPC\nFirst, let’s create a new directory somewhere to save our files\n\n\ncd /home/$USER/project/$USER\nmkdir workshop\ncd workshop\n\n\nQuestion: what is your current directory?\nwget is a command we can use to download files over the internet\n\n\nwget https://hgdownload.cse.ucsc.edu/goldenpath/mm10/bigZips/mm10.fa.gz\nwget https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M1/gencode.vM1.annotation.gtf.gz"
+    "text": "Downloading these files to our HPC\nFirst, let’s create a new directory somewhere to save our files\n\n\n\n\ncd /home/$USER/project/$USER\nmkdir workshop\ncd workshop\n\n\n\nQuestion: what is your current directory?\nwget is a command we can use to download files over the internet\n\n\nwget https://hgdownload.cse.ucsc.edu/goldenpath/mm10/bigZips/mm10.fa.gz\nwget https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M1/gencode.vM1.annotation.gtf.gz"
   },
   {
     "objectID": "week1/intro.html#downloading-these-files-to-our-hpc-1",
@@ -95,7 +95,7 @@
     "href": "week1/intro.html#resources",
     "title": "A primer on RNA-seq analysis",
     "section": "Resources",
-    "text": "Resources\n\n\nDigital Research Alliance of Canada\nDRAC wiki\nYoutube\ncommand-line stuff (bash) basic commmands\nbasic commands\n(network stuff not relevant)\nRNA-seq\nGriffith lab\nData carpentry\nHarvard Core"
+    "text": "Resources\n\n\nDigital Research Alliance of Canada\nDRAC wiki\nYoutube\ncommand-line stuff (bash)\nbasic commmands\nbasic commands\n(network stuff not relevant)\nRNA-seq\nGriffith lab\nData carpentry\nHarvard Core"
   },
   {
     "objectID": "week1/intro.html#filesystem-and-policies",

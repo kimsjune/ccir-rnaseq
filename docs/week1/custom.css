@@ -8,3 +8,10 @@
   align-items: center;
   height: 90%;
 }
+
+br {
+  display: block;
+  content: "";
+  margin: 4px 0 0;
+}
+

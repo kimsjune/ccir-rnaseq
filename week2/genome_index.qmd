@@ -131,13 +131,17 @@ Let's set our $SLURM_ACCOUNT `environment variable` so that you can copy & paste
 ```{bash}
 cd /home/$USER/projects && ls
 ```
+
 <br>
+
 ```{bash}
 # Append our new environment variable to our settings file
 # Don't hit enter before changing "YOUR_GROUP_NAME"
 echo export SLURM_ACCOUNT=YOUR_GROUP_NAME >> ~/.bashrc
 ```
+
 <br>
+
 ```{bash}
 # This settings file needs to be reloaded
 source ~/.bashrc
