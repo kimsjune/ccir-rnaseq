@@ -56,7 +56,10 @@ ssh skim823@graham.computecanada.ca
 cd /home/$USER/project/$USER/workshop
 pwd # Check where we are
 ```
+
 :::
+
+## Unzipping
 
 Our files are `gz`ipped (compressed). So they have to be un-zipped with `gzip`.  
 
