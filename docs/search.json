@@ -3,8 +3,8 @@
     "objectID": "week1/intro.html#plan",
     "href": "week1/intro.html#plan",
     "title": "A primer on RNA-seq analysis",
-    "section": "Plan",
-    "text": "Plan\n\nIntro to RNA-seq analysis (today)\nRNA-seq pt 1\n\nindexing the genome\nread alignment\ncounting\n\nRNA-seq pt 2\n\ndifferential gene expression with edgeR\n\nRNA-seq pt 3\n\nvisualization"
+    "section": "",
+    "text": "Intro to RNA-seq analysis (today)\nRNA-seq pt 1\n\nindexing the genome\nread alignment\ncounting\n\nRNA-seq pt 2\n\ndifferential gene expression with edgeR\n\nRNA-seq pt 3\n\nvisualization"
   },
   {
     "objectID": "week1/intro.html#overview",
@@ -53,7 +53,7 @@
     "href": "week1/intro.html#logging-into-graham-through-terminalcommand-prompt",
     "title": "A primer on RNA-seq analysis",
     "section": "Logging into graham through Terminal/Command Prompt",
-    "text": "Logging into graham through Terminal/Command Prompt\n\n\n\n\n\n\nWarning\n\n\nChange skim823 with your username!\n\n\n\n\n\n\nssh skim823@graham.computecanada.ca\n\n\n\n\nPrompts you with “are you sure blah blah?”; type yes\nPrompts with your password; what you type is invisible for security\n\nPrompts you with MFA (annoying)"
+    "text": "Logging into graham through Terminal/Command Prompt\n\n\n\n\n\n\nWarning\n\n\n\nChange skim823 with your username!\n\n\n\n\n\nssh skim823@graham.computecanada.ca\n\n\n\n\nPrompts you with “are you sure blah blah?”; type yes\nPrompts with your password; what you type is invisible for security\n\nPrompts you with MFA (annoying)"
   },
   {
     "objectID": "week1/intro.html#linux-terminal-basics",
@@ -130,14 +130,14 @@
     "href": "docs/index.html",
     "title": "CCIR 2024 Bioinformatics",
     "section": "",
-    "text": "Below you will find all the links to slides for a series of workshops on RNA-seq analysis.\n\n\nSlides\n\n\n\nSlides"
+    "text": "Below you will find all the links to slides for a series of workshops on RNA-seq analysis.\n\n\nSlides\n\n\n\nSlides\n\n\n\nSlides"
   },
   {
     "objectID": "docs/index.html#about",
     "href": "docs/index.html#about",
     "title": "CCIR 2024 Bioinformatics",
     "section": "",
-    "text": "Below you will find all the links to slides for a series of workshops on RNA-seq analysis.\n\n\nSlides\n\n\n\nSlides"
+    "text": "Below you will find all the links to slides for a series of workshops on RNA-seq analysis.\n\n\nSlides\n\n\n\nSlides\n\n\n\nSlides"
   },
   {
     "objectID": "week1/intro.html#working-on-a-high-performance-computing-cluster-hpc",
@@ -264,5 +264,12 @@
     "title": "A primer on RNA-seq analysis",
     "section": "Summary",
     "text": "Summary\n\n\n\n\n\nnext week, we will use htseq to count how many reads are aligned to each gene"
+  },
+  {
+    "objectID": "week1/intro.html",
+    "href": "week1/intro.html",
+    "title": "A primer on RNA-seq analysis",
+    "section": "",
+    "text": "Intro to RNA-seq analysis (today)\nRNA-seq pt 1\n\nindexing the genome\nread alignment\ncounting\n\nRNA-seq pt 2\n\ndifferential gene expression with edgeR\n\nRNA-seq pt 3\n\nvisualization"
   }
 ]
