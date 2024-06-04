@@ -179,7 +179,7 @@
     "href": "week2/genome_index.html#full-job-script",
     "title": "A primer on RNA-seq analysis",
     "section": "Full job script",
-    "text": "Full job script\n\n\n#!/bin/bash\n#SBATCH --account=$SLURM_ACCOUNT\n#SBATCH --time=1:w00:00\n#SBATCH --cpus-per-task=12\n#SBATCH --mem-per-cpu=16G\n#SBATCH --job-name=STAR_index\n#SBATCH --output=%x.%j.out\n#SBATCH --error=%x.%j.err\n\nSTAR --runThreadN 12 --runMode genomeGenerate \\\n--genomeDir \\\n/home/$USER/project/$USER/workshop/stargenome \\\n--genomeFastaFiles \\\n/home/$USER/project/$USER/workshop/mm10.fa \\\n--sjdbGTFfile \\\n/home/$USER/project/$USER/workshop/gencode.vM1.annotation.gtf \\\n--sjdbOverhang 74"
+    "text": "Full job script\n\n\n#!/bin/bash\n#SBATCH --account=$SLURM_ACCOUNT\n#SBATCH --time=1:00:00\n#SBATCH --cpus-per-task=12\n#SBATCH --mem-per-cpu=16G\n#SBATCH --job-name=STAR_index\n#SBATCH --output=%x.%j.out\n#SBATCH --error=%x.%j.err\n\nSTAR --runThreadN 12 --runMode genomeGenerate \\\n--genomeDir \\\n/home/$USER/project/$USER/workshop/stargenome \\\n--genomeFastaFiles \\\n/home/$USER/project/$USER/workshop/mm10.fa \\\n--sjdbGTFfile \\\n/home/$USER/project/$USER/workshop/gencode.vM1.annotation.gtf \\\n--sjdbOverhang 74"
   },
   {
     "objectID": "week2/genome_index.html#create-and-save-a-job-script-text-file-with-nano",
@@ -208,5 +208,61 @@
     "title": "A primer on RNA-seq analysis",
     "section": "HPCs vs Cloud",
     "text": "HPCs vs Cloud\nThese HPCs are free like free beer, but you often have to wait for your stuff to run.\n\nWait time depends on usage (CPUs, time, memory). slurm keeps track of these.\n\nYou’d want to avoid wasteful usage. You can check efficiency by running seff JOBID.\n\nslurm documentation\n\nFrequently used commands: sbatch, sq, sacct -b, seff\n\nOn the other hand, cloud services (AWS, Azure, GCP) have no wait times, but functionally not free."
+  },
+  {
+    "objectID": "week3/align.html#recap",
+    "href": "week3/align.html#recap",
+    "title": "A primer on RNA-seq analysis",
+    "section": "Recap",
+    "text": "Recap\n\n\n\n\n\nlast week, we created an index\nthis week, we will align our reads to the genome"
+  },
+  {
+    "objectID": "week3/align.html#remeber-our-reads.fq.gz",
+    "href": "week3/align.html#remeber-our-reads.fq.gz",
+    "title": "A primer on RNA-seq analysis",
+    "section": "Remeber our reads.fq.gz?",
+    "text": "Remeber our reads.fq.gz?\nThese can be split across a few lanes, which should be pooled at this point.\n\n\nmkdir cat\ncat ./DKO_D1_L001/* ./DKO_D1_L002/* ./DKO_D1_L003/* ./DKO_D1_L004/* &gt; ./cat/DKO_D1.fastq.gz\n\n\n\n* is a wild card character; it matches any character at any length\n\ncat con-cat-enates our files together into DKO_D1.fastq.gz\n\nWe are running this from a log in node. With full sized files, you have to run these in a slurm job script\n\n\n\n# Not run\n\n#!/bin/bash\n#SBATCH --account=$SLURM_ACCOUNT\n#SBATCH --time=30:00\n#SBATCH --mem=4g\n#SBATCH --output=concat.out\n\ncat ./NTC_D1_L001/* ./NTC_D1_L002/* ./NTC_D1_L003/* ./NTC_D1_L004/* &gt; ./NTC_D1.fastq.gz\ncat ./NTC_D2_L001/* ./NTC_D2_L002/* ./NTC_D2_L003/* ./NTC_D2_L004/* &gt; ./NTC_D2.fastq.gz\ncat ./NTC_D3_L001/* ./NTC_D3_L002/* ./NTC_D3_L003/* ./NTC_D3_L004/* &gt; ./NTC_D3.fastq.gz\ncat ./NTC_G1_L001/* ./NTC_G1_L002/* ./NTC_G1_L003/* ./NTC_G1_L004/* &gt; ./NTC_G1.fastq.gz\ncat ./NTC_G2_L001/* ./NTC_G2_L002/* ./NTC_G2_L003/* ./NTC_G2_L004/* &gt; ./NTC_G2.fastq.gz\ncat ./NTC_G3_L001/* ./NTC_G3_L002/* ./NTC_G3_L003/* ./NTC_G3_L004/* &gt; ./NTC_G3.fastq.gz\ncat ./DKO_D1_L001/* ./DKO_D1_L002/* ./DKO_D1_L003/* ./DKO_D1_L004/* &gt; ./DKO_D1.fastq.gz\ncat ./DKO_D2_L001/* ./DKO_D2_L002/* ./DKO_D2_L003/* ./DKO_D2_L004/* &gt; ./DKO_D2.fastq.gz\ncat ./DKO_D3_L001/* ./DKO_D3_L002/* ./DKO_D3_L003/* ./DKO_D3_L004/* &gt; ./DKO_D3.fastq.gz\ncat ./DKO_G1_L001/* ./DKO_G1_L002/* ./DKO_G1_L003/* ./DKO_G1_L004/* &gt; ./DKO_G1.fastq.gz\ncat ./DKO_G2_L001/* ./DKO_G2_L002/* ./DKO_G2_L003/* ./DKO_G2_L004/* &gt; ./DKO_G2.fastq.gz\ncat ./DKO_G3_L001/* ./DKO_G3_L002/* ./DKO_G3_L003/* ./DKO_G3_L004/* &gt; ./DKO_G3.fastq.gz"
+  },
+  {
+    "objectID": "week3/align.html#alignment-job-script",
+    "href": "week3/align.html#alignment-job-script",
+    "title": "A primer on RNA-seq analysis",
+    "section": "Alignment job script",
+    "text": "Alignment job script\n\n\n#!/bin/bash\n#SBATCH --account=$SLURM_ACCOUNT\n#SBATCH --time=30:00\n#SBATCH --cpus-per-task=4\n#SBATCH --mem-per-cpu=8G\n#SBATCH --job-name=STAR_align\n#SBATCH --output=%x.%j.out\n#SBATCH --error=%x.%j.err\n\nSTAR --runThreadN 4 --genomeDir /home/$USER/project/$USER/workshop/stargenome \\\n--readFilesIn /home/$USER/project/$USER/workshop/cat/DKO_D1.fastq.gz \\\n--outSAMtype BAM SortedByCoordinate --readFilesCommand zcat \\\n--outFileNamePrefix ./DKO_D1"
+  },
+  {
+    "objectID": "week3/align.html#alignment-command",
+    "href": "week3/align.html#alignment-command",
+    "title": "A primer on RNA-seq analysis",
+    "section": "Alignment command",
+    "text": "Alignment command\n\n\nSTAR --runThreadN 4 --genomeDir /home/$USER/project/$USER/workshop/stargenome \\\n--readFilesIn /home/$USER/project/$USER/workshop/cat/DKO_D1.fastq.gz \\\n--outSAMtype BAM SortedByCoordinate --readFilesCommand zcat \\\n--outFileNamePrefix ./DKO_D1\n\n\n\n--runMode alignReads is omitted because it’s the default\n\n--runThreadN to use multiple cores\n\n--genomeDir is the directory that contains index files\n--outSAMtype BAM SortedByCoordinate outputs binary alignment file (.bam) that can be used downstream directly (instead of unsorted .sam)\n\n--readFilesCommand zcat: to use DKO_D1.fq.gz file directly"
+  },
+  {
+    "objectID": "week3/align.html#how-do-we-check-if-star-is-loaded",
+    "href": "week3/align.html#how-do-we-check-if-star-is-loaded",
+    "title": "A primer on RNA-seq analysis",
+    "section": "How do we check if STAR is loaded?",
+    "text": "How do we check if STAR is loaded?\n\n\n\n\nSTAR --version    \nmodule load star"
+  },
+  {
+    "objectID": "week3/align.html#writing-and-saving-the-job-script",
+    "href": "week3/align.html#writing-and-saving-the-job-script",
+    "title": "A primer on RNA-seq analysis",
+    "section": "Writing and saving the job script",
+    "text": "Writing and saving the job script\nRecall we need to create a job script text file:\n\n\nnano align.sh\n\n\nctrl/cmd + x, y, enter to save\nHow do we check if STAR is loaded?\n\n\n\nSTAR --version\nmodule load star\n\n\n\n\nAaaaaaaaad, send it.\n\n\nsbatch align.sh\n\n\n\n\nCheck status\n\n\nsq"
+  },
+  {
+    "objectID": "week3/align.html#writing-and-saving-the-job-script-1",
+    "href": "week3/align.html#writing-and-saving-the-job-script-1",
+    "title": "A primer on RNA-seq analysis",
+    "section": "Writing and saving the job script",
+    "text": "Writing and saving the job script\nRecall we need to create a job script text file:\n\n\nnano align.sh\n\n\nctrl/cmd + x, y, enter to save\nHow do we check if STAR is loaded?\n\n\nSTAR --version\nmodule load star"
+  },
+  {
+    "objectID": "week3/align.html#summary",
+    "href": "week3/align.html#summary",
+    "title": "A primer on RNA-seq analysis",
+    "section": "Summary",
+    "text": "Summary\n\n\n\n\n\nnext week, we will use htseq to count how many reads are aligned to each gene"
   }
 ]

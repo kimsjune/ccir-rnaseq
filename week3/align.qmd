@@ -1,0 +1,205 @@
+---
+title: A primer on RNA-seq analysis
+subtitle: "Week 3: Aligning reads to the genome"
+from: markdown+emoji
+author: Joon Kim 
+date: "2024-06-15"
+format: 
+  revealjs:
+    scrollable: true
+    smaller: true
+    css: custom.css
+editor: source
+engine: knitr
+execute:
+  echo: true
+  eval: false
+
+include-in-header: 
+  - text: |
+      <style>
+      #title-slide .title {
+        font-size: 3em;
+      }
+      #title-slide .subtitle {
+        font-size: 2em;
+      }
+      </style>
+
+
+---
+
+
+## Recap
+
+:::: columns
+::: {.column width="40%"}
+![](flowchart.svg)
+:::
+
+::: {.column width="60%"}
+-  last week, we created an index 
+-  this week, we will align our reads to the genome
+:::
+
+::::
+
+## Remeber our `reads.fq.gz`?
+
+These can be split across a few lanes, which should be pooled at this point.
+
+::: big-code
+
+```{bash}
+mkdir cat
+cat ./DKO_D1_L001/* ./DKO_D1_L002/* ./DKO_D1_L003/* ./DKO_D1_L004/* > ./cat/DKO_D1.fastq.gz
+```
+
+:::
+
+-  `*` is a wild card character; it matches any character at any length  
+-  `cat` con-**cat**-enates our files together into `DKO_D1.fastq.gz`  
+-  We are running this from a log in node. With full sized files, you have to run these in a `slurm` job script  
+
+::: big-code
+
+```{bash}
+# Not run
+
+#!/bin/bash
+#SBATCH --account=$SLURM_ACCOUNT
+#SBATCH --time=30:00
+#SBATCH --mem=4g
+#SBATCH --output=concat.out
+
+cat ./NTC_D1_L001/* ./NTC_D1_L002/* ./NTC_D1_L003/* ./NTC_D1_L004/* > ./NTC_D1.fastq.gz
+cat ./NTC_D2_L001/* ./NTC_D2_L002/* ./NTC_D2_L003/* ./NTC_D2_L004/* > ./NTC_D2.fastq.gz
+cat ./NTC_D3_L001/* ./NTC_D3_L002/* ./NTC_D3_L003/* ./NTC_D3_L004/* > ./NTC_D3.fastq.gz
+cat ./NTC_G1_L001/* ./NTC_G1_L002/* ./NTC_G1_L003/* ./NTC_G1_L004/* > ./NTC_G1.fastq.gz
+cat ./NTC_G2_L001/* ./NTC_G2_L002/* ./NTC_G2_L003/* ./NTC_G2_L004/* > ./NTC_G2.fastq.gz
+cat ./NTC_G3_L001/* ./NTC_G3_L002/* ./NTC_G3_L003/* ./NTC_G3_L004/* > ./NTC_G3.fastq.gz
+cat ./DKO_D1_L001/* ./DKO_D1_L002/* ./DKO_D1_L003/* ./DKO_D1_L004/* > ./DKO_D1.fastq.gz
+cat ./DKO_D2_L001/* ./DKO_D2_L002/* ./DKO_D2_L003/* ./DKO_D2_L004/* > ./DKO_D2.fastq.gz
+cat ./DKO_D3_L001/* ./DKO_D3_L002/* ./DKO_D3_L003/* ./DKO_D3_L004/* > ./DKO_D3.fastq.gz
+cat ./DKO_G1_L001/* ./DKO_G1_L002/* ./DKO_G1_L003/* ./DKO_G1_L004/* > ./DKO_G1.fastq.gz
+cat ./DKO_G2_L001/* ./DKO_G2_L002/* ./DKO_G2_L003/* ./DKO_G2_L004/* > ./DKO_G2.fastq.gz
+cat ./DKO_G3_L001/* ./DKO_G3_L002/* ./DKO_G3_L003/* ./DKO_G3_L004/* > ./DKO_G3.fastq.gz
+```
+
+:::
+
+## Alignment command
+
+::: big-code
+
+```{bash}
+STAR --runThreadN 4 --genomeDir /home/$USER/project/$USER/workshop/stargenome \
+--readFilesIn /home/$USER/project/$USER/workshop/cat/DKO_D1.fastq.gz \
+--outSAMtype BAM SortedByCoordinate --readFilesCommand zcat \
+--outFileNamePrefix ./DKO_D1
+```
+
+:::
+
+-  `--runMode alignReads` is omitted because it's the default  
+-  `--runThreadN` to use multiple cores  
+-  `--genomeDir` is the *directory* that contains index files
+-  `--outSAMtype BAM SortedByCoordinate` outputs binary alignment file (`.bam`) that can be used downstream directly (instead of unsorted `.sam`)  
+-  `--readFilesCommand zcat`: to use `DKO_D1.fq.gz` file directly  
+
+
+## Alignment job script
+
+::: big-code
+
+```{bash}
+#!/bin/bash
+#SBATCH --account=$SLURM_ACCOUNT
+#SBATCH --time=30:00
+#SBATCH --cpus-per-task=4
+#SBATCH --mem-per-cpu=8G
+#SBATCH --job-name=STAR_align
+#SBATCH --output=%x.%j.out
+#SBATCH --error=%x.%j.err
+
+STAR --runThreadN 4 --genomeDir /home/$USER/project/$USER/workshop/stargenome \
+--readFilesIn /home/$USER/project/$USER/workshop/cat/DKO_D1.fastq.gz \
+--outSAMtype BAM SortedByCoordinate --readFilesCommand zcat \
+--outFileNamePrefix ./DKO_D1
+```
+:::
+
+
+
+## Writing and saving the job script{auto-animate="true"}
+
+
+Recall we need to create a job script text file:  
+
+::: big-code
+
+```{bash}
+nano align.sh
+```
+:::
+
+`ctrl/cmd + x`, `y`, `enter` to save
+
+How do we check if `STAR` is loaded?
+
+:::: {.fragment .appear}
+
+::: big-code
+
+```{bash}
+STAR --version
+module load star
+```
+
+:::
+
+::::
+
+
+
+:::: {.fragment .appear}
+
+Aaaaaaaaad, send it.
+
+::: big-code
+
+```{bash}
+sbatch align.sh
+```
+
+:::
+
+::::
+
+
+:::: {.fragment .appear}
+
+Check status
+
+::: big-code
+
+```{bash}
+sq
+```
+
+:::
+
+::::
+
+## Summary
+
+:::: columns
+::: {.column width="40%"}
+![](flowchart.svg)
+:::
+
+::: {.column width="60%"}
+-  next week, we will use `htseq` to count how many reads are aligned to each gene  
+:::
+
+::::

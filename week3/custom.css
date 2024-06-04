@@ -1,0 +1,17 @@
+.big-code {
+  font-size: 200%;
+}
+
+.v-center-container {
+  display: flex;
+/*  justify-content: center;*/  
+  align-items: center;
+  height: 90%;
+}
+
+br {
+  display: block;
+  content: "";
+  margin: 4px 0 0;
+}
+

@@ -171,7 +171,7 @@ Tips\
 
 :::: columns
 ::: {.column width="40%"}
-![](mermaid-diagram-2024-06-03-114302.svg)
+![](flowchart.svg)
 :::
 
 ::: {.column width="60%"}
@@ -247,7 +247,7 @@ wget https://github.com/kimsjune/ccir-bioinformatics2024/tree/main/week1/DKO_D1_
 
 :::: columns
 ::: {.column width="40%"}
-![](mermaid-diagram-2024-06-03-114302.svg)
+![](flowchart.svg)
 :::
 
 ::: {.column width="60%"}

@@ -33,7 +33,7 @@ include-in-header:
 
 :::: columns
 ::: {.column width="40%"}
-![](mermaid-diagram-2024-06-03-114302.svg)
+![](flowchart.svg)
 :::
 
 ::: {.column width="60%"}
@@ -181,7 +181,7 @@ STAR --runThreadN 12 --runMode genomeGenerate --genomeDir /home/$USER/project/$U
 ```{bash}
 #!/bin/bash
 #SBATCH --account=$SLURM_ACCOUNT
-#SBATCH --time=1:w00:00
+#SBATCH --time=1:00:00
 #SBATCH --cpus-per-task=12
 #SBATCH --mem-per-cpu=16G
 #SBATCH --job-name=STAR_index
