@@ -14,7 +14,6 @@ engine: knitr
 execute:
   echo: true
   eval: false
-  code-overflow: wrap
 
 include-in-header: 
   - text: |
