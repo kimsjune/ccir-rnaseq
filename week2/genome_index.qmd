@@ -1,0 +1,71 @@
+---
+title: A primer on RNA-seq analysis
+subtitle: "Week 2: Indexing the genome"
+from: markdown+emoji
+author: Joon Kim 
+date: "2024-06-15"
+format: 
+  revealjs:
+    scrollable: true
+    smaller: true
+    css: custom.css
+editor: source
+engine: knitr
+execute:
+  echo: true
+  eval: false
+  code-overflow: wrap
+
+include-in-header: 
+  - text: |
+      <style>
+      #title-slide .title {
+        font-size: 3em;
+      }
+      #title-slide .subtitle {
+        font-size: 2em;
+      }
+      </style>
+---
+
+## Recap
+
+:::: columns
+::: {.column width="40%"}
+![](mermaid-diagram-2024-06-03-114302.svg)
+:::
+
+::: {.column width="60%"}
+-  last week, we downloaded all the necessary files  
+-  we will do our real first "thing"---creating an index
+:::
+
+::::
+
+## Setup
+
+::: {.big-code}
+
+```{bash}
+# This is a comment; it does not get executed.
+# Log in to Graham
+ssh skim823@graham.computecanada.ca
+```
+```{bash}
+# Remember where we downloaded our files?
+cd /home/$USER/project/$USER/workshop
+pwd # Check where we are
+```
+Our files are `gz`ipped (compressed). So they have to be un-zipped with `gzip`.
+```{bash}
+gzip --help
+```
+```{bash}
+gzip -c mm10.fa.gz
+gzip -c gencode.vM1.annotation.gtf.gz
+# Are the files there?
+ls -l
+```
+
+:::
+

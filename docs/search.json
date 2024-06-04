@@ -1,72 +1,121 @@
 [
   {
-    "objectID": "week1/page-reveal.html#plan",
-    "href": "week1/page-reveal.html#plan",
-    "title": "Intro to RNA-seq analysis",
+    "objectID": "week1/intro.html#plan",
+    "href": "week1/intro.html#plan",
+    "title": "A primer on RNA-seq analysis",
     "section": "Plan",
-    "text": "Plan\n\nIntro to RNA-seq analysis (today)\n\nRNA-seq pt 1\n\nindexing the genome\nread alignment\ncounting\n\nRNA-seq pt 2\n\ndifferential gene expression with edgeR\n\nRNA-seq pt 3\n\nvisualization"
+    "text": "Plan\n\nIntro to RNA-seq analysis (today)\nRNA-seq pt 1\n\nindexing the genome\nread alignment\ncounting\n\nRNA-seq pt 2\n\ndifferential gene expression with edgeR\n\nRNA-seq pt 3\n\nvisualization"
   },
   {
-    "objectID": "week1/page-reveal.html#overview",
-    "href": "week1/page-reveal.html#overview",
-    "title": "Intro to RNA-seq analysis",
+    "objectID": "week1/intro.html#overview",
+    "href": "week1/intro.html#overview",
+    "title": "A primer on RNA-seq analysis",
     "section": "Overview",
     "text": "Overview\n\nSample 1\n..ATGCTAGATCG…\n…GGTACTACT…\nSample 2\n..TGGTGTGCTG…\n…GCTAGCTGCA…\n\n\n\nGene\nSample 1\nSample 2\n…\n\n\n\n\nXYZ\n1234\n4312\n…\n\n\n…\n12\n44\n…"
   },
   {
-    "objectID": "week1/page-reveal.html#not-within-the-scope",
-    "href": "week1/page-reveal.html#not-within-the-scope",
-    "title": "Intro to RNA-seq analysis",
+    "objectID": "week1/intro.html#not-within-the-scope",
+    "href": "week1/intro.html#not-within-the-scope",
+    "title": "A primer on RNA-seq analysis",
     "section": "Not within the scope",
-    "text": "Not within the scope\n\nwhen/why you should or shouldn’t do RNA-seq\n\nhow to purify RNA and send to sequencing\n\ncore facility jobs\n\nRNA-seq library generation\nIllumina sequencing technology (ex. bridge amplification)"
+    "text": "Not within the scope\n\nwhen/why you should or shouldn’t do RNA-seq\n\nhow to purify RNA and send to sequencing (Tronto/McGill)\n\nbudget and design (might cover later)\n\ncore facility jobs\n\nRNA-seq library generation\n\nnon-core labs don’t typically make their own libraries\n\nIllumina sequencing technology (ex. bridge amplification)"
   },
   {
-    "objectID": "week1/page-reveal.html#two-phases-to-rna-seq-analysis",
-    "href": "week1/page-reveal.html#two-phases-to-rna-seq-analysis",
-    "title": "Intro to RNA-seq analysis",
+    "objectID": "week1/intro.html#within-the-scope",
+    "href": "week1/intro.html#within-the-scope",
+    "title": "A primer on RNA-seq analysis",
+    "section": "Within the scope",
+    "text": "Within the scope\n\nYou have (or will have) some RNA-seq data to analyze\n\nie. you have (or will have) some samples.fq.gz files\n\nhow to go from here to PCA, Volcano plots, heatmaps, etc.? 🤔🤔🤔"
+  },
+  {
+    "objectID": "week1/intro.html#two-phases-to-rna-seq-analysis",
+    "href": "week1/intro.html#two-phases-to-rna-seq-analysis",
+    "title": "A primer on RNA-seq analysis",
     "section": "Two phases to RNA-seq analysis",
     "text": "Two phases to RNA-seq analysis\n\n\n\n\n\n\n\n\nStep\nEnvironment\nRationale\n\n\n\n\nreads ➡️ count table\nHPC\n\nlarge file size\nhigh compute\nnon-interactive\n\n\n\ncount table ➡️ plots\nlocal\n\nsmall file size\nlow compute\ninteractive"
   },
   {
-    "objectID": "week1/page-reveal.html#working-on-a-high-computing-cluster-hpc",
-    "href": "week1/page-reveal.html#working-on-a-high-computing-cluster-hpc",
-    "title": "Intro to RNA-seq analysis",
+    "objectID": "week1/intro.html#working-on-a-high-computing-cluster-hpc",
+    "href": "week1/intro.html#working-on-a-high-computing-cluster-hpc",
+    "title": "A primer on RNA-seq analysis",
     "section": "Working on a high computing cluster (HPC)",
-    "text": "Working on a high computing cluster (HPC)\n\nA big challenge to learning bioinformatics is the lack of graphical user interfaces (GUI).\n\nInstead we have to use the command-line interface (CLI).\nTo process reads into a count table, we need to use a HPC at a remote location.\n\nTo do this, we log in to our HPC using a secure shell (ssh)."
+    "text": "Working on a high computing cluster (HPC)\n\nA big challenge to learning bioinformatics is the lack of graphical user interfaces (GUI).\n\nInstead we have to use the command-line interface (CLI).\nTo process reads into a count table, we need to use a HPC at a remote location."
   },
   {
-    "objectID": "week1/page-reveal.html#a-hpc-waterloo-graham",
-    "href": "week1/page-reveal.html#a-hpc-waterloo-graham",
-    "title": "Intro to RNA-seq analysis",
+    "objectID": "week1/intro.html#a-hpc-waterloo-graham",
+    "href": "week1/intro.html#a-hpc-waterloo-graham",
+    "title": "A primer on RNA-seq analysis",
     "section": "A HPC @ Waterloo: Graham",
-    "text": "A HPC @ Waterloo: Graham\n\n –&gt; ssh –&gt; Graham"
+    "text": "A HPC @ Waterloo: Graham\n\n- it’s a big freaking computer\n- we can’t drive over to Waterloo every time\n- We can log in to graham from our computer using ssh"
   },
   {
-    "objectID": "week1/page-reveal.html#logging-into-graham-through-terminalcommand-prompt",
-    "href": "week1/page-reveal.html#logging-into-graham-through-terminalcommand-prompt",
-    "title": "Intro to RNA-seq analysis",
+    "objectID": "week1/intro.html#logging-into-graham-through-terminalcommand-prompt",
+    "href": "week1/intro.html#logging-into-graham-through-terminalcommand-prompt",
+    "title": "A primer on RNA-seq analysis",
     "section": "Logging into graham through Terminal/Command Prompt",
-    "text": "Logging into graham through Terminal/Command Prompt\n\n\n\n\n\n\nWarning\n\n\nChange skim823 with your username!\n\n\n\nssh skim823@graham.computecanada.ca"
+    "text": "Logging into graham through Terminal/Command Prompt\n\n\n\n\n\n\nWarning\n\n\nChange skim823 with your username!\n\n\n\n\n\n\n\n\n\n\nssh skim823@graham.computecanada.ca"
   },
   {
-    "objectID": "week1/page-reveal.html#linux-terminal-basics",
-    "href": "week1/page-reveal.html#linux-terminal-basics",
-    "title": "Intro to RNA-seq analysis",
+    "objectID": "week1/intro.html#linux-terminal-basics",
+    "href": "week1/intro.html#linux-terminal-basics",
+    "title": "A primer on RNA-seq analysis",
     "section": "Linux terminal basics",
-    "text": "Linux terminal basics\n\n\nBasic commands\n- pwd\n- ls\n- cd\n- cp\n- mv\n- mkdir\n- touch\n- rm - cat\n- head\n- tail\n\nTips\n- tab to “auto” complete\n- ctrl/cmd + c to abort\n- ctrl/cmd + a to move the cursor to the beginning\n- ctrl/cmd + e to move the cursor to the end\n- ctrl/cmd + l to clear the screen"
+    "text": "Linux terminal basics\n\n\nBasic commands\n- pwd\n- ls\n- cd\n- cp\n- mv\n- mkdir\n- touch\n- rm\n- cat\n- head\n- tail\n\nTips\n- tab to “auto” complete\n- ctrl/cmd + c to abort\n- ctrl/cmd + a to move the cursor to the beginning\n- ctrl/cmd + e to move the cursor to the end\n- ctrl/cmd + l to clear the screen"
   },
   {
-    "objectID": "week1/page-reveal.html#workflow-on-the-hpc-side",
-    "href": "week1/page-reveal.html#workflow-on-the-hpc-side",
-    "title": "Intro to RNA-seq analysis",
+    "objectID": "week1/intro.html#workflow-on-the-hpc-side",
+    "href": "week1/intro.html#workflow-on-the-hpc-side",
+    "title": "A primer on RNA-seq analysis",
     "section": "Workflow on the HPC side",
-    "text": "Workflow on the HPC side\n\n\n\n\n\nwe need at least (and at most) three kinds of files: genome .fa file, genes .gtf/.gff file and reads .fq.gz files.\n\nhopefully you got your reads.fq.gz from your sequencing core\n\ngenome is the reference build of your organism\n\nex. mm10, mm39, hg38\n\ngenes contains coordinates (among others) to all genes of that genome\n\nyou have to make sure they match"
+    "text": "Workflow on the HPC side\n\n\n\n\n\nwe need at least (and at most) three kinds of files:\n\ngenome.fa file\n\ngenes.gtf/.gff file\n\nreads.fq.gz files\n\n\nhopefully you got your reads.fq.gz from your sequencing core\n\ngenome is the reference build of your organism\n\nex. mm10, mm39, hg38\n\ngenes contains coordinates (among others) to all genes of that genome\n\nprotein-coding, non-coding, how well annotated?\n\nyou have to make sure your genome and genes match"
   },
   {
-    "objectID": "week1/page-reveal.html#downloading-these-files-to-our-hpc",
-    "href": "week1/page-reveal.html#downloading-these-files-to-our-hpc",
-    "title": "Intro to RNA-seq analysis",
+    "objectID": "week1/intro.html#downloading-these-files-to-our-hpc",
+    "href": "week1/intro.html#downloading-these-files-to-our-hpc",
+    "title": "A primer on RNA-seq analysis",
     "section": "Downloading these files to our HPC",
-    "text": "Downloading these files to our HPC\nFirst, let’s create a new directory somewhere to save our files\ncd project/$USER\nmkdir workshop\ncd workshop\nQuestion: what is your current directory?\nwget is a command we can use to download files over the internet\nwget https://hgdownload.cse.ucsc.edu/goldenpath/mm10/bigZips/mm10.fa.gz\nwget https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M1/gencode.vM1.annotation.gtf.gz"
+    "text": "Downloading these files to our HPC\nFirst, let’s create a new directory somewhere to save our files\n\n\ncd /home/$USER/project/$USER\nmkdir workshop\ncd workshop\n\n\nQuestion: what is your current directory?\nwget is a command we can use to download files over the internet\n\n\nwget https://hgdownload.cse.ucsc.edu/goldenpath/mm10/bigZips/mm10.fa.gz\nwget https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_mouse/release_M1/gencode.vM1.annotation.gtf.gz"
+  },
+  {
+    "objectID": "week1/intro.html#downloading-these-files-to-our-hpc-1",
+    "href": "week1/intro.html#downloading-these-files-to-our-hpc-1",
+    "title": "A primer on RNA-seq analysis",
+    "section": "Downloading these files to our HPC",
+    "text": "Downloading these files to our HPC\nThese are our dummy reads (*.fq.gz):\n\n1% of all reads subsampled to reduce computational cost\n\nDKO for double KO cells\n\nD1 for DMSO treated replicate 1\n\nL00? for sequencing lanes\n\nsamples are sequenced across different “lanes” on the sequencing machine\n\nto reduce lane bias? idk lol\n\n\nyou might get pooled reads or not depending on the core/machine setup\n\n\n\n\n\n\nwget https://github.com/kimsjune/ccir-bioinformatics2024/tree/main/week1/DKO_D1_L001\nwget https://github.com/kimsjune/ccir-bioinformatics2024/tree/main/week1/DKO_D1_L002\nwget https://github.com/kimsjune/ccir-bioinformatics2024/tree/main/week1/DKO_D1_L003\nwget https://github.com/kimsjune/ccir-bioinformatics2024/tree/main/week1/DKO_D1_L004"
+  },
+  {
+    "objectID": "week1/intro.html#progress-so-far",
+    "href": "week1/intro.html#progress-so-far",
+    "title": "A primer on RNA-seq analysis",
+    "section": "Progress so far",
+    "text": "Progress so far\n\n\n\n\n\nwe got our reads.fq.gz, genome.fa, and genes.gtf\nnext week we will perform STAR index\n\nnecessary to align our reads to the genome"
+  },
+  {
+    "objectID": "week1/intro.html#resources",
+    "href": "week1/intro.html#resources",
+    "title": "A primer on RNA-seq analysis",
+    "section": "Resources",
+    "text": "Resources\n\n\nDigital Research Alliance of Canada\nDRAC wiki\nYoutube\ncommand-line stuff (bash) basic commmands\nbasic commands\n(network stuff not relevant)\nRNA-seq\nGriffith lab\nData carpentry\nHarvard Core"
+  },
+  {
+    "objectID": "week1/intro.html#filesystem-and-policies",
+    "href": "week1/intro.html#filesystem-and-policies",
+    "title": "A primer on RNA-seq analysis",
+    "section": "Filesystem and policies",
+    "text": "Filesystem and policies\n\n\n\n\n\n\n\n\n\n\nFolder\nDefault quota\nBacked up?\nPurged?\nUse case\n\n\n\n\n/home/$USER\n50GB, 500k files\nY\nN\nsetup files\n\n\n/scratch/$USER\n20TB, 1M files\nN\nY, after 60d\nday-to-day (temp)\n\n\n/home/$USER/project/$USER\n1TB, 500k files\nY\nN\nstatic data\n\n\n/home/$USER/nearline\n2TB, 5k files per group\nY\nN\nlong term storage\n\n\n\nDocumentation"
+  },
+  {
+    "objectID": "week2/genome_index.html#recap",
+    "href": "week2/genome_index.html#recap",
+    "title": "A primer on RNA-seq analysis",
+    "section": "Recap",
+    "text": "Recap\n\n\n\n\n\nlast week, we downloaded all the necessary files\n\nwe will do our real first “thing”—creating an index"
+  },
+  {
+    "objectID": "week2/genome_index.html#setup",
+    "href": "week2/genome_index.html#setup",
+    "title": "A primer on RNA-seq analysis",
+    "section": "Setup",
+    "text": "Setup\n\n\n# This is a comment; it does not get executed.\n# Log in to Graham\nssh skim823@graham.computecanada.ca\n\n\n# Remember where we downloaded our files?\ncd /home/$USER/project/$USER/workshop\npwd # Check where we are\n\nOur files are gzipped (compressed). So they have to be un-zipped with gzip.\n\ngzip --help\n\n\ngzip -c mm10.fa.gz\ngzip -c gencode.vM1.annotation.gtf.gz\n# Are the files there?\nls -l"
   }
 ]
