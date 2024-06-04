@@ -437,6 +437,7 @@ Joon Kim
 <span id="cb1-2"><a></a><span class="co"># Log in to Graham</span></span>
 <span id="cb1-3"><a></a><span class="fu">ssh</span> skim823@graham.computecanada.ca</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><br></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="co"># Remember where we downloaded our files?</span></span>
 <span id="cb2-2"><a></a><span class="bu">cd</span> /home/<span class="va">$USER</span>/project/<span class="va">$USER</span>/workshop</span>
@@ -451,6 +452,7 @@ Joon Kim
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="fu">gzip</span> <span class="at">--help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><br></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="fu">gzip</span> <span class="at">-c</span> mm10.fa.gz</span>
 <span id="cb4-2"><a></a><span class="fu">gzip</span> <span class="at">-c</span> gencode.vM1.annotation.gtf.gz</span>
@@ -458,6 +460,226 @@ Joon Kim
 <span id="cb4-4"><a></a><span class="fu">ls</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>Use <code>--help</code> or <code>-h</code> to see a help menu<br>
+</li>
+<li>Use <code>--version</code> or <code>-v</code> to see if the program is even loaded</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="log-in-vs.-compute-node" class="slide level2">
+<h2>Log in vs.&nbsp;compute node</h2>
+<ul>
+<li>When we <code>ssh</code> into <code>graham</code>, we are at a <strong>log in</strong> node<br>
+</li>
+<li>To run computationally heavy stuff like indexing a genome, we need to submit it as a job to a <strong>compute</strong> node
+<ul>
+<li>or else it will take forever</li>
+</ul></li>
+<li>What about the <code>gzip</code> thing just now? It’s okay for a log in node</li>
+<li>We need to write a text file describing our command, then submit it to <code>slurm</code>
+<ul>
+<li><code>slurm</code> is a program running on the HPC that manages our requests</li>
+</ul></li>
+</ul>
+</section>
+<section id="a-slurm-job-script-header" class="slide level2">
+<h2>A <code>slurm</code> job script header</h2>
+<div class="big-code">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a></a><span class="co">#!/bin/bash</span></span>
+<span id="cb5-2"><a></a><span class="co">#SBATCH --account=$SLURM_ACCOUNT</span></span>
+<span id="cb5-3"><a></a><span class="co">#SBATCH --time=1:00:00</span></span>
+<span id="cb5-4"><a></a><span class="co">#SBATCH --cpus-per-task=12</span></span>
+<span id="cb5-5"><a></a><span class="co">#SBATCH --mem-per-cpu=16G</span></span>
+<span id="cb5-6"><a></a><span class="co">#SBATCH --job-name=STAR_index</span></span>
+<span id="cb5-7"><a></a><span class="co">#SBATCH --output=%x.%j.out</span></span>
+<span id="cb5-8"><a></a><span class="co">#SBATCH --error=%x.%j.err</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>These lines outline the resources we are requesting:</p>
+<ul>
+<li>line 1: a “shebang” line that indicates this is a <code>bash</code> script (mandatory)<br>
+</li>
+<li>line 2: our group account name (mandatory)<br>
+</li>
+<li>lines 3-5: we are asking for 12 CPUs, 16G RAM each for 1 hr total
+<ul>
+<li>If our job is not done within 1 hr, tough luck. It will just terminate.</li>
+</ul></li>
+<li>lines 6-8: many programs spit out some metadata about what it’s doing and if anything is going wrong into <code>stdout</code> and <code>stderr</code>, respectively. Custom names for these files.</li>
+</ul>
+</section>
+<section id="setting-our-slurm_account" class="slide level2">
+<h2>Setting our $SLURM_ACCOUNT</h2>
+<p>Let’s set our $SLURM_ACCOUNT <code>environment variable</code> so that you can copy &amp; paste code.</p>
+<div class="big-code">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="bu">cd</span> /home/<span class="va">$USER</span>/projects <span class="kw">&amp;&amp;</span> <span class="fu">ls</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a></a><span class="co"># Append our new environment variable to our settings file</span></span>
+<span id="cb7-2"><a></a><span class="co"># Don't hit enter before changing "YOUR_GROUP_NAME"</span></span>
+<span id="cb7-3"><a></a><span class="bu">echo</span> export SLURM_ACCOUNT=YOUR_GROUP_NAME <span class="op">&gt;&gt;</span> ~/.bashrc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a></a><span class="co"># This settings file needs to be reloaded</span></span>
+<span id="cb8-2"><a></a><span class="bu">source</span> ~/.bashrc</span>
+<span id="cb8-3"><a></a><span class="co"># Check if SLURM_ACCOUNT is now set</span></span>
+<span id="cb8-4"><a></a><span class="bu">echo</span> <span class="va">$SLURM_ACCOUNT</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="indexing-with-star" class="slide level2">
+<h2>Indexing with <code>STAR</code></h2>
+<p><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3530905/"><code>STAR</code></a> is a fast splice-aware read alignment program. Designed specifically for mapping RNA-seq reads. Cited some cool 38k times since 2013.</p>
+<p>Other alternatives: <a href="https://www.nature.com/articles/s41587-019-0201-4">HISAT2</a>, <a href="https://www.nature.com/articles/nbt.3519">Kallisto</a>, <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5600148/">Salmon</a></p>
+<div class="big-code">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a></a><span class="ex">STAR</span> <span class="at">--runThreadN</span> 12 <span class="at">--runMode</span> genomeGenerate <span class="at">--genomeDir</span> /home/<span class="va">$USER</span>/project/<span class="va">$USER</span>/workshop/stargenome <span class="at">--genomeFastaFiles</span> /home/<span class="va">$USER</span>/project/<span class="va">$USER</span>/workshop/mm10.fa  <span class="at">--sjdbGTFfile</span> /home/<span class="va">$USER</span>/project/<span class="va">$USER</span>/workshop/gencode.vM1.annotation.gtf <span class="at">--sjdbOverhang</span> 74</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p><a href="https://physiology.med.cornell.edu/faculty/skrabanek/lab/angsd/lecture_notes/STARmanual.pdf">STAR manual</a></p>
+<ul>
+<li><code>runThreadN</code>: running 12 cores in parallel<br>
+</li>
+<li><code>runMode</code>: creating an index<br>
+</li>
+<li><code>genomeDir</code>: where the output (index) will go<br>
+</li>
+<li><code>genomeFastaFiles</code>: path to our reference genome<br>
+</li>
+<li><code>sjdbGTFfile</code>: path to our gene annotation<br>
+</li>
+<li><code>sjdbOverhang</code>: read length - 1</li>
+</ul>
+</section>
+<section id="full-job-script" class="slide level2">
+<h2>Full job script</h2>
+<div class="big-code">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a></a><span class="co">#!/bin/bash</span></span>
+<span id="cb10-2"><a></a><span class="co">#SBATCH --account=$SLURM_ACCOUNT</span></span>
+<span id="cb10-3"><a></a><span class="co">#SBATCH --time=1:w00:00</span></span>
+<span id="cb10-4"><a></a><span class="co">#SBATCH --cpus-per-task=12</span></span>
+<span id="cb10-5"><a></a><span class="co">#SBATCH --mem-per-cpu=16G</span></span>
+<span id="cb10-6"><a></a><span class="co">#SBATCH --job-name=STAR_index</span></span>
+<span id="cb10-7"><a></a><span class="co">#SBATCH --output=%x.%j.out</span></span>
+<span id="cb10-8"><a></a><span class="co">#SBATCH --error=%x.%j.err</span></span>
+<span id="cb10-9"><a></a></span>
+<span id="cb10-10"><a></a><span class="ex">STAR</span> <span class="at">--runThreadN</span> 12 <span class="at">--runMode</span> genomeGenerate <span class="dt">\</span></span>
+<span id="cb10-11"><a></a>--genomeDir <span class="dt">\</span></span>
+<span id="cb10-12"><a></a>/home/<span class="va">$USER</span>/project/<span class="va">$USER</span>/workshop/stargenome <span class="dt">\</span></span>
+<span id="cb10-13"><a></a>--genomeFastaFiles <span class="dt">\</span></span>
+<span id="cb10-14"><a></a>/home/<span class="va">$USER</span>/project/<span class="va">$USER</span>/workshop/mm10.fa <span class="dt">\</span></span>
+<span id="cb10-15"><a></a>--sjdbGTFfile <span class="dt">\</span></span>
+<span id="cb10-16"><a></a>/home/<span class="va">$USER</span>/project/<span class="va">$USER</span>/workshop/gencode.vM1.annotation.gtf <span class="dt">\</span></span>
+<span id="cb10-17"><a></a>--sjdbOverhang 74</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="create-and-save-a-job-script-text-file-with-nano" class="slide level2">
+<h2>Create and save a job script text file with <code>nano</code></h2>
+<p><code>nano</code> is a built-in text editor. Use the arrow keys to navigate.</p>
+<div class="big-code">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a></a><span class="fu">nano</span> index.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Paste in the full job script, save with <code>ctrl/cmd + x</code>, hit <code>y</code> to “Save modified buffer”, and hit <code>enter</code> to confirm “File Name to Write”.</p>
+</section>
+<section id="loading-star-with-module" class="slide level2">
+<h2>Loading <code>STAR</code> with <code>module</code></h2>
+<p>One of the benefits of these HPCs is that popular programs are pre-installed. They just have to be loaded before we submit our job script.</p>
+<div class="big-code">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a></a><span class="co"># Prompts you to select a version by pressing a number</span></span>
+<span id="cb12-2"><a></a><span class="ex">STAR</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a></a><span class="co"># or load it directly like this</span></span>
+<span id="cb13-2"><a></a><span class="ex">module</span> load star</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>Sometimes our module environment has to be right to even load certain programs<br>
+</li>
+<li><code>module spider PROGRAM</code> will tell you how to load certain programs<br>
+</li>
+<li><code>module list</code> shows all active modules<br>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="finally-running-it" class="slide level2">
+<h2>Finally running it</h2>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>Always check if your program (as a module) is loaded by running <code>PROGRAM --version / -v / -V</code>. If it’s not, your job will fail.</p>
+</div>
+</div>
+</div>
+<div class="big-code">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a></a><span class="ex">STAR</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a></a><span class="ex">sbatch</span> index.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Check the <code>slurm</code> job schedule for your account:</p>
+<div class="big-code">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a></a><span class="ex">sq</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="hpcs-vs-cloud" class="slide level2">
+<h2>HPCs vs Cloud</h2>
+<p>These HPCs are <strong>free</strong> like free beer, but you often have to wait for your stuff to run.<br>
+</p>
+<p>Wait time depends on usage (CPUs, time, memory). <code>slurm</code> keeps track of these.<br>
+</p>
+<p>You’d want to avoid wasteful usage. You can check efficiency by running <code>seff JOBID</code>.<br>
+</p>
+<p><a href="https://slurm.schedmd.com/documentation.html"><code>slurm</code> documentation</a><br>
+</p>
+<p>Frequently used commands: <code>sbatch</code>, <code>sq</code>, <code>sacct -b</code>, <code>seff</code><br>
+</p>
+<p>On the other hand, cloud services (AWS, Azure, GCP) have no wait times, but functionally not free.</p>
 
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">

@@ -14,7 +14,6 @@ engine: knitr
 execute:
   echo: true
   eval: false
-  code-overflow: wrap
 
 include-in-header: 
   - text: |
@@ -26,6 +25,8 @@ include-in-header:
         font-size: 2em;
       }
       </style>
+
+
 ---
 
 ## Recap
@@ -50,7 +51,8 @@ include-in-header:
 # This is a comment; it does not get executed.
 # Log in to Graham
 ssh skim823@graham.computecanada.ca
-```
+```  
+<br>
 ```{bash}
 # Remember where we downloaded our files?
 cd /home/$USER/project/$USER/workshop
@@ -68,6 +70,7 @@ Our files are `gz`ipped (compressed). So they have to be un-zipped with `gzip`.
 ```{bash}
 gzip --help
 ```
+<br>
 ```{bash}
 gzip -c mm10.fa.gz
 gzip -c gencode.vM1.annotation.gtf.gz
@@ -77,4 +80,202 @@ ls -l
 
 :::
 
+::: {.callout-tip}
 
+-  Use `--help` or `-h` to see a help menu  
+-  Use `--version` or `-v` to see if the program is even loaded
+
+:::
+
+## Log in vs. compute node
+
+-  When we `ssh` into `graham`, we are at a **log in** node  
+-  To run computationally heavy stuff like indexing a genome, 
+we need to submit it as a job to a **compute** node  
+    -  or else it will take forever
+-  What about the `gzip` thing just now? It's okay for a log in node 
+-  We need to write a text file describing our command, then submit it to `slurm`  
+    -  `slurm` is a program running on the HPC that manages our requests
+
+## A `slurm` job script header
+
+::: {.big-code}
+
+```{bash}
+#!/bin/bash
+#SBATCH --account=$SLURM_ACCOUNT
+#SBATCH --time=1:00:00
+#SBATCH --cpus-per-task=12
+#SBATCH --mem-per-cpu=16G
+#SBATCH --job-name=STAR_index
+#SBATCH --output=%x.%j.out
+#SBATCH --error=%x.%j.err
+```
+
+:::
+
+These lines outline the resources we are requesting:  
+
+-   line 1: a "shebang" line that indicates this is a `bash` script (mandatory)  
+-   line 2: our group account name (mandatory)  
+-   lines 3-5: we are asking for 12 CPUs, 16G RAM each for 1 hr total  
+    -   If our job is not done within 1 hr, tough luck. It will just terminate. 
+-   lines 6-8: many programs spit out some metadata about what it's doing and if anything is going wrong into `stdout` and `stderr`, respectively. Custom names for these files.
+
+## Setting our $SLURM_ACCOUNT
+
+Let's set our $SLURM_ACCOUNT `environment variable` so that you can copy & paste code.  
+
+::: big-code
+
+```{bash}
+cd /home/$USER/projects && ls
+```
+<br>
+```{bash}
+# Append our new environment variable to our settings file
+# Don't hit enter before changing "YOUR_GROUP_NAME"
+echo export SLURM_ACCOUNT=YOUR_GROUP_NAME >> ~/.bashrc
+```
+<br>
+```{bash}
+# This settings file needs to be reloaded
+source ~/.bashrc
+# Check if SLURM_ACCOUNT is now set
+echo $SLURM_ACCOUNT
+```
+
+:::
+
+## Indexing with `STAR`
+
+[`STAR`](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3530905/) is a fast splice-aware read alignment program. Designed specifically for mapping RNA-seq reads. Cited some cool 38k times since 2013.  
+
+Other alternatives: [HISAT2](https://www.nature.com/articles/s41587-019-0201-4), [Kallisto](https://www.nature.com/articles/nbt.3519), [Salmon](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5600148/)
+
+::: big-code
+
+```{bash}
+STAR --runThreadN 12 --runMode genomeGenerate --genomeDir /home/$USER/project/$USER/workshop/stargenome --genomeFastaFiles /home/$USER/project/$USER/workshop/mm10.fa  --sjdbGTFfile /home/$USER/project/$USER/workshop/gencode.vM1.annotation.gtf --sjdbOverhang 74
+```
+
+:::
+
+[STAR manual](https://physiology.med.cornell.edu/faculty/skrabanek/lab/angsd/lecture_notes/STARmanual.pdf)
+
+-  `runThreadN`: running 12 cores in parallel\
+-  `runMode`: creating an index\
+-  `genomeDir`: where the output (index) will go\
+-  `genomeFastaFiles`: path to our reference genome\
+-  `sjdbGTFfile`: path to our gene annotation\
+-  `sjdbOverhang`: read length - 1
+
+
+## Full job script
+
+::: big-code
+```{bash}
+#!/bin/bash
+#SBATCH --account=$SLURM_ACCOUNT
+#SBATCH --time=1:w00:00
+#SBATCH --cpus-per-task=12
+#SBATCH --mem-per-cpu=16G
+#SBATCH --job-name=STAR_index
+#SBATCH --output=%x.%j.out
+#SBATCH --error=%x.%j.err
+
+STAR --runThreadN 12 --runMode genomeGenerate \
+--genomeDir \
+/home/$USER/project/$USER/workshop/stargenome \
+--genomeFastaFiles \
+/home/$USER/project/$USER/workshop/mm10.fa \
+--sjdbGTFfile \
+/home/$USER/project/$USER/workshop/gencode.vM1.annotation.gtf \
+--sjdbOverhang 74
+```
+
+:::
+
+
+## Create and save a job script text file with `nano`
+
+
+`nano` is a built-in text editor. Use the arrow keys to navigate.
+
+::: big-code
+
+```{bash}
+nano index.sh
+```
+:::
+
+Paste in the full job script, save with `ctrl/cmd + x`, hit `y` to "Save modified buffer", and hit `enter` to confirm "File Name to Write".
+
+
+## Loading `STAR` with `module`
+
+One of the benefits of these HPCs is that popular programs are pre-installed. They just have to be loaded before we submit our job script. 
+
+
+::: big-code
+
+```{bash}
+# Prompts you to select a version by pressing a number
+STAR --version
+```
+<br>
+```{bash}
+# or load it directly like this
+module load star
+```
+
+:::
+
+::: callout-tip
+
+-   Sometimes our module environment has to be right to even load certain programs\
+-   `module spider PROGRAM` will tell you how to load certain programs\
+-   `module list` shows all active modules\
+:::
+
+## Finally running it
+
+::: callout-warning
+
+Always check if your program (as a module) is loaded by running `PROGRAM --version / -v / -V`. If it's not, your job will fail.
+
+:::
+
+::: big-code
+```{bash}
+STAR --version
+```
+<br>
+```{bash}
+sbatch index.sh
+```
+
+:::
+
+Check the `slurm` job schedule for your account:
+
+::: big-code
+
+```{bash}
+sq
+```
+:::
+
+## HPCs vs Cloud
+
+These HPCs are **free** like free beer, but you often have to wait for your stuff to run.\
+
+Wait time depends on usage (CPUs, time, memory). `slurm` keeps track of these.\
+
+You'd want to avoid wasteful usage. You can check efficiency by running `seff JOBID`.\
+
+[`slurm` documentation](https://slurm.schedmd.com/documentation.html)\
+
+Frequently used commands: `sbatch`, `sq`, `sacct -b`, `seff`\
+
+On the other hand, cloud services (AWS, Azure, GCP) have no wait times, but functionally not free. 

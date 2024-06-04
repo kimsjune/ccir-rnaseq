@@ -43,7 +43,7 @@ include-in-header:
 ## Not within the scope
 
 -   when/why you should or shouldn't do RNA-seq\
--   how to purify RNA and send to sequencing (Tronto/McGill)\
+-   how to purify RNA and send to sequencing (Toronto/McGill)\
 -   budget and design (might cover later)\
 -   core facility jobs
     -   RNA-seq library generation
@@ -98,20 +98,22 @@ include-in-header:
 
 : {tbl-colwidths="\[50,30,50\]"}
 
-## Working on a high computing cluster (HPC)
+## Working on a high performance computing cluster (HPC)
 
 -   A big challenge to learning bioinformatics is the lack of graphical user interfaces (GUI).\
+    - click and drag
 
--   Instead we have to use the command-line interface (CLI).
+-   Instead we have to use the command-line interface (CLI).  
+    - we have to type out what we want to do
 
 -   To process `reads` into a `count table`, we need to use a HPC at a remote location.\
 
 ## A HPC \@ Waterloo: Graham
 
 ![](justin-wan-with-graham-selfie.webp){width="70%"}\
-- it's a big freaking computer\
-- we can't drive over to Waterloo every time\
-- We can log in to `graham` from our computer using `ssh`
+-   it's a big freaking computer\
+-   we can't drive over to Waterloo every time\
+-   We can log in to `graham` from our computer using `ssh`
 
 ## Logging into `graham` through Terminal/Command Prompt
 
