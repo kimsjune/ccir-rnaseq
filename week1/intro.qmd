@@ -132,7 +132,7 @@ ssh skim823@graham.computecanada.ca
 
 :::
 
-<br>
+<br> 
 
 -  Prompts you with "are you sure blah blah?"; type `yes`
 -  Prompts with your password; what you type is invisible for security  
