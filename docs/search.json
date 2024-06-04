@@ -124,5 +124,19 @@
     "title": "A primer on RNA-seq analysis",
     "section": "Unzipping",
     "text": "Unzipping\nOur files are gzipped (compressed). So they have to be un-zipped with gzip.\n\n\ngzip --help\n\n\ngzip -c mm10.fa.gz\ngzip -c gencode.vM1.annotation.gtf.gz\n# Are the files there?\nls -l"
+  },
+  {
+    "objectID": "docs/index.html",
+    "href": "docs/index.html",
+    "title": "CCIR 2024 Bioinformatics",
+    "section": "",
+    "text": "Below you will find all the links to slides for a series of workshops on RNA-seq analysis.\n\n\nSlides\n\n\n\nSlides"
+  },
+  {
+    "objectID": "docs/index.html#about",
+    "href": "docs/index.html#about",
+    "title": "CCIR 2024 Bioinformatics",
+    "section": "",
+    "text": "Below you will find all the links to slides for a series of workshops on RNA-seq analysis.\n\n\nSlides\n\n\n\nSlides"
   }
 ]
