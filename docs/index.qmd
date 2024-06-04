@@ -8,12 +8,10 @@ editor: visual
 
 Below you will find all the links to slides for a series of workshops on RNA-seq analysis.
 
-
-
 ### Week 1
 
-[Slides](https://kimsjune.github.io/ccir-bioinformatics2024/week1/intro.html)
+[Slides](https://kimsjune.github.io/ccir-rnaseq/week1/intro.html)
 
 ### Week 2
 
-[Slides](https://kimsjune.github.io/ccir-bioinformatics2024/week2/genome_index.html)
+[Slides](https://kimsjune.github.io/ccir-rnaseq/week2/genome_index.html)
