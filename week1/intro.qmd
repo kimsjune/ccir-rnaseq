@@ -198,7 +198,7 @@ First, let's create a new directory somewhere to save our files\
 ::: big-code
 
 ```{bash}
-cd /home/$USER/project/$USER
+# go to your PROJECTS directory
 mkdir workshop
 cd workshop
 ```
@@ -235,10 +235,10 @@ These are our dummy reads (`*.fq.gz`):
 <div class=big-code>
 
 ```{bash}
-wget https://github.com/kimsjune/ccir-bioinformatics2024/tree/main/week1/DKO_D1_L001
-wget https://github.com/kimsjune/ccir-bioinformatics2024/tree/main/week1/DKO_D1_L002
-wget https://github.com/kimsjune/ccir-bioinformatics2024/tree/main/week1/DKO_D1_L003
-wget https://github.com/kimsjune/ccir-bioinformatics2024/tree/main/week1/DKO_D1_L004
+wget https://github.com/kimsjune/ccir-bioinformatics2024/tree/main/week1/DKO_D1_L001/
+wget https://github.com/kimsjune/ccir-bioinformatics2024/tree/main/week1/DKO_D1_L002/
+wget https://github.com/kimsjune/ccir-bioinformatics2024/tree/main/week1/DKO_D1_L003/
+wget https://github.com/kimsjune/ccir-bioinformatics2024/tree/main/week1/DKO_D1_L004/
 ```
 
 
