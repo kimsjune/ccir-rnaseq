@@ -264,7 +264,7 @@ wget https://github.com/kimsjune/ccir-bioinformatics2024/tree/main/week1/DKO_D1_
 |---------------------------|------------------------|------------|--------------|------------------|
 |`/home/$USER`              |50GB, 500k files        | Y          | N            |       setup files|
 |`/scratch/$USER`           |20TB, 1M files          |N           | Y, after 60d | day-to-day (temp)|
-|`/home/$USER/project/$USER`|1TB, 500k files         | Y          | N            |       static data|
+|`/project/SLRUM_GROUP/$USER`|1TB, 500k files         | Y          | N            |       static data|
 |`/home/$USER/nearline`     |2TB, 5k files per group | Y          | N            | long term storage|
 
 [Documentation](https://docs.alliancecan.ca/wiki/Storage_and_file_management)

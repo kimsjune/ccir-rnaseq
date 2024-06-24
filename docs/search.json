@@ -102,7 +102,7 @@
     "href": "week1/intro.html#filesystem-and-policies",
     "title": "A primer on RNA-seq analysis",
     "section": "Filesystem and policies",
-    "text": "Filesystem and policies\n\n\n\n\n\n\n\n\n\n\nFolder\nDefault quota\nBacked up?\nPurged?\nUse case\n\n\n\n\n/home/$USER\n50GB, 500k files\nY\nN\nsetup files\n\n\n/scratch/$USER\n20TB, 1M files\nN\nY, after 60d\nday-to-day (temp)\n\n\n/home/$USER/project/$USER\n1TB, 500k files\nY\nN\nstatic data\n\n\n/home/$USER/nearline\n2TB, 5k files per group\nY\nN\nlong term storage\n\n\n\nDocumentation"
+    "text": "Filesystem and policies\n\n\n\n\n\n\n\n\n\n\nFolder\nDefault quota\nBacked up?\nPurged?\nUse case\n\n\n\n\n/home/$USER\n50GB, 500k files\nY\nN\nsetup files\n\n\n/scratch/$USER\n20TB, 1M files\nN\nY, after 60d\nday-to-day (temp)\n\n\n/project/SLRUM_GROUP/$USER\n1TB, 500k files\nY\nN\nstatic data\n\n\n/home/$USER/nearline\n2TB, 5k files per group\nY\nN\nlong term storage\n\n\n\nDocumentation"
   },
   {
     "objectID": "week2/genome_index.html#recap",
