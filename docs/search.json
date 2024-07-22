@@ -53,7 +53,7 @@
     "href": "week1/intro.html#logging-into-graham-through-terminalcommand-prompt",
     "title": "A primer on RNA-seq analysis",
     "section": "Logging into graham through Terminal/Command Prompt",
-    "text": "Logging into graham through Terminal/Command Prompt\n\n\n\n\n\n\nWarning\n\n\nChange skim823 with your username!\n\n\n\n\n\n\nssh skim823@graham.computecanada.ca\n\n\n\n\nPrompts you with “are you sure blah blah?”; type yes\nPrompts with your password; what you type is invisible for security\n\nPrompts you with MFA (annoying)"
+    "text": "Logging into graham through Terminal/Command Prompt\n\n\n\n\n\n\nWarning\n\n\nChange skim823 with your username!\n\n\n\n\n\n\nssh skim823@graham.computecanada.ca\n\n\n\n\nPrompts you with “are you sure blah blah?”; type yes\nPrompts with your password; what you type is invisible for security\n\nPrompts you with MFA (annoying)\n\npress 1 or enter to proceed to MFA without any delay"
   },
   {
     "objectID": "week1/intro.html#linux-terminal-basics",
@@ -116,14 +116,14 @@
     "href": "week2/genome_index.html#setup",
     "title": "A primer on RNA-seq analysis",
     "section": "Setup",
-    "text": "Setup\n\n\n# This is a comment; it does not get executed.\n# Log in to Graham\nssh skim823@graham.computecanada.ca\n\n\n\n# Remember where we downloaded our files?\ncd /home/$USER/project/$USER/workshop\npwd # Check where we are"
+    "text": "Setup\n\n\n# This is a comment; it does not get executed.\n# Log in to Graham\nssh skim823@graham.computecanada.ca\n\n\n\n# Remember where we downloaded our files?\ncd /home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop\npwd # Check where we are"
   },
   {
     "objectID": "week2/genome_index.html#unzipping",
     "href": "week2/genome_index.html#unzipping",
     "title": "A primer on RNA-seq analysis",
     "section": "Unzipping",
-    "text": "Unzipping\nOur files are gzipped (compressed). So they have to be un-zipped with gzip.\n\n\ngzip --help\n\n\n\ngzip -c mm10.fa.gz\ngzip -c gencode.vM1.annotation.gtf.gz\n# Are the files there?\nls -l\n\n\n\n\n\n\n\n\nTip\n\n\n\nUse --help or -h to see a help menu\n\nUse --version or -v to see if the program is even loaded"
+    "text": "Unzipping\nOur files are gzipped (compressed). So they have to be un-zipped with gunzip.\n\n\ngunzip --help\n\n\n\ngunzip -c mm10.fa.gz &gt; ./mm10.fa\ngunzip -c gencode.vM1.annotation.gtf.gz &gt; ./gencode.vM1.annotation.gtf\n# Are the files there?\nls -l\n\n\n\n\n\n\n\n\nTip\n\n\n\nUse --help or -h to see a help menu\n\nUse --version or -v to see if the program is even loaded"
   },
   {
     "objectID": "docs/index.html",
@@ -151,7 +151,7 @@
     "href": "week2/genome_index.html#log-in-vs.-compute-node",
     "title": "A primer on RNA-seq analysis",
     "section": "Log in vs. compute node",
-    "text": "Log in vs. compute node\n\nWhen we ssh into graham, we are at a log in node\n\nTo run computationally heavy stuff like indexing a genome, we need to submit it as a job to a compute node\n\nor else it will take forever\n\nWhat about the gzip thing just now? It’s okay for a log in node\nWe need to write a text file describing our command, then submit it to slurm\n\nslurm is a program running on the HPC that manages our requests"
+    "text": "Log in vs. compute node\n\nWhen we ssh into graham, we are at a log in node\n\nTo run computationally heavy stuff like indexing a genome, we need to submit it as a job to a compute node\n\nor else it will take forever\n\nWhat about the gunzip thing just now? It’s okay for a log in node\nWe need to write a text file (job script) describing our command, then submit it to slurm\n\nslurm is a program running on the HPC that manages our requests"
   },
   {
     "objectID": "week2/genome_index.html#a-slurm-job-script-header",
@@ -172,21 +172,21 @@
     "href": "week2/genome_index.html#indexing-with-star",
     "title": "A primer on RNA-seq analysis",
     "section": "Indexing with STAR",
-    "text": "Indexing with STAR\nSTAR is a fast splice-aware read alignment program. Designed specifically for mapping RNA-seq reads. Cited some cool 38k times since 2013.\nOther alternatives: HISAT2, Kallisto, Salmon\n\n\nSTAR --runThreadN 12 --runMode genomeGenerate --genomeDir /home/$USER/project/$USER/workshop/stargenome --genomeFastaFiles /home/$USER/project/$USER/workshop/mm10.fa  --sjdbGTFfile /home/$USER/project/$USER/workshop/gencode.vM1.annotation.gtf --sjdbOverhang 74\n\n\nSTAR manual\n\nrunThreadN: running 12 cores in parallel\n\nrunMode: creating an index\n\ngenomeDir: where the output (index) will go\n\ngenomeFastaFiles: path to our reference genome\n\nsjdbGTFfile: path to our gene annotation\n\nsjdbOverhang: read length - 1"
+    "text": "Indexing with STAR\nSTAR is a fast splice-aware read alignment program. Designed specifically for mapping RNA-seq reads. Cited some cool 38k times since 2013.\nOther alternatives: HISAT2, Kallisto, Salmon\n\n\nSTAR --runThreadN 12 --runMode genomeGenerate --genomeDir /home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/stargenome --genomeFastaFiles /home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/mm10.fa  --sjdbGTFfile /home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/gencode.vM1.annotation.gtf --sjdbOverhang 74\n\n\nSTAR manual\n\nrunThreadN: running 12 cores in parallel\n\nrunMode: creating an index\n\ngenomeDir: where the output (index) will go\n\ngenomeFastaFiles: path to our reference genome\n\nsjdbGTFfile: path to our gene annotation\n\nsjdbOverhang: read length - 1"
   },
   {
     "objectID": "week2/genome_index.html#full-job-script",
     "href": "week2/genome_index.html#full-job-script",
     "title": "A primer on RNA-seq analysis",
     "section": "Full job script",
-    "text": "Full job script\n\n\n#!/bin/bash\n#SBATCH --account=$SLURM_ACCOUNT\n#SBATCH --time=1:00:00\n#SBATCH --cpus-per-task=12\n#SBATCH --mem-per-cpu=16G\n#SBATCH --job-name=STAR_index\n#SBATCH --output=%x.%j.out\n#SBATCH --error=%x.%j.err\n\nSTAR --runThreadN 12 --runMode genomeGenerate \\\n--genomeDir \\\n/home/$USER/project/$USER/workshop/stargenome \\\n--genomeFastaFiles \\\n/home/$USER/project/$USER/workshop/mm10.fa \\\n--sjdbGTFfile \\\n/home/$USER/project/$USER/workshop/gencode.vM1.annotation.gtf \\\n--sjdbOverhang 74"
+    "text": "Full job script\n\n\n#!/bin/bash\n#SBATCH --account=$SLURM_ACCOUNT\n#SBATCH --time=1:00:00\n#SBATCH --cpus-per-task=12\n#SBATCH --mem-per-cpu=16G\n#SBATCH --job-name=STAR_index\n#SBATCH --output=%x.%j.out\n#SBATCH --error=%x.%j.err\n\nSTAR --runThreadN 12 --runMode genomeGenerate \\\n--genomeDir \\\n/home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/stargenome \\\n--genomeFastaFiles \\\n/home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/mm10.fa \\\n--sjdbGTFfile \\\n/home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/gencode.vM1.annotation.gtf \\\n--sjdbOverhang 74"
   },
   {
     "objectID": "week2/genome_index.html#create-and-save-a-job-script-text-file-with-nano",
     "href": "week2/genome_index.html#create-and-save-a-job-script-text-file-with-nano",
     "title": "A primer on RNA-seq analysis",
     "section": "Create and save a job script text file with nano",
-    "text": "Create and save a job script text file with nano\nnano is a built-in text editor. Use the arrow keys to navigate.\n\n\nnano index.sh\n\n\nPaste in the full job script, save with ctrl/cmd + x, hit y to “Save modified buffer”, and hit enter to confirm “File Name to Write”."
+    "text": "Create and save a job script text file with nano\nnano is a built-in text editor. Use the arrow keys to navigate.\n\n\nnano index.sh\n\n\nPaste in the full job script, save with ctrl/cmd + x, hit y to “Save modified buffer”, and hit enter to confirm “File Name to Write”.\nBut what’s in a job script?"
   },
   {
     "objectID": "week2/genome_index.html#loading-star-with-module",
@@ -228,14 +228,14 @@
     "href": "week3/align.html#alignment-job-script",
     "title": "A primer on RNA-seq analysis",
     "section": "Alignment job script",
-    "text": "Alignment job script\n\n\n#!/bin/bash\n#SBATCH --account=$SLURM_ACCOUNT\n#SBATCH --time=30:00\n#SBATCH --cpus-per-task=4\n#SBATCH --mem-per-cpu=8G\n#SBATCH --job-name=STAR_align\n#SBATCH --output=%x.%j.out\n#SBATCH --error=%x.%j.err\n\nSTAR --runThreadN 4 --genomeDir /home/$USER/project/$USER/workshop/stargenome \\\n--readFilesIn /home/$USER/project/$USER/workshop/cat/DKO_D1.fastq.gz \\\n--outSAMtype BAM SortedByCoordinate --readFilesCommand zcat \\\n--outFileNamePrefix ./DKO_D1"
+    "text": "Alignment job script\n\n\n#!/bin/bash\n#SBATCH --account=$SLURM_ACCOUNT\n#SBATCH --time=30:00\n#SBATCH --cpus-per-task=4\n#SBATCH --mem-per-cpu=8G\n#SBATCH --job-name=STAR_align\n#SBATCH --output=%x.%j.out\n#SBATCH --error=%x.%j.err\n\nSTAR --runThreadN 4 --genomeDir /home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/stargenome \\\n--readFilesIn /home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/cat/DKO_D1.fastq.gz \\\n--outSAMtype BAM SortedByCoordinate --readFilesCommand zcat \\\n--outFileNamePrefix ./DKO_D1"
   },
   {
     "objectID": "week3/align.html#alignment-command",
     "href": "week3/align.html#alignment-command",
     "title": "A primer on RNA-seq analysis",
     "section": "Alignment command",
-    "text": "Alignment command\n\n\nSTAR --runThreadN 4 --genomeDir /home/$USER/project/$USER/workshop/stargenome \\\n--readFilesIn /home/$USER/project/$USER/workshop/cat/DKO_D1.fastq.gz \\\n--outSAMtype BAM SortedByCoordinate --readFilesCommand zcat \\\n--outFileNamePrefix ./DKO_D1\n\n\n\n--runMode alignReads is omitted because it’s the default\n\n--runThreadN to use multiple cores\n\n--genomeDir is the directory that contains index files\n--outSAMtype BAM SortedByCoordinate outputs binary alignment file (.bam) that can be used downstream directly (instead of unsorted .sam)\n\n--readFilesCommand zcat: to use DKO_D1.fq.gz file directly"
+    "text": "Alignment command\n\n\nSTAR --runThreadN 4 --genomeDir /home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/stargenome \\\n--readFilesIn /home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/cat/DKO_D1.fastq.gz \\\n--outSAMtype BAM SortedByCoordinate --readFilesCommand zcat \\\n--outFileNamePrefix ./DKO_D1\n\n\n\n--runMode alignReads is omitted because it’s the default\n\n--runThreadN to use multiple cores\n\n--genomeDir is the directory that contains index files\n--outSAMtype BAM SortedByCoordinate outputs binary alignment file (.bam) that can be used downstream directly (instead of unsorted .sam)\n\n--readFilesCommand zcat: to use DKO_D1.fq.gz file directly"
   },
   {
     "objectID": "week3/align.html#how-do-we-check-if-star-is-loaded",
@@ -271,5 +271,12 @@
     "title": "A primer on RNA-seq analysis",
     "section": "",
     "text": "Intro to RNA-seq analysis (today)\nRNA-seq pt 1\n\nindexing the genome\nread alignment\ncounting\n\nRNA-seq pt 2\n\ndifferential gene expression with edgeR\n\nRNA-seq pt 3\n\nvisualization"
+  },
+  {
+    "objectID": "week2/genome_index.html#actual-command-to-create-an-index-with-star",
+    "href": "week2/genome_index.html#actual-command-to-create-an-index-with-star",
+    "title": "A primer on RNA-seq analysis",
+    "section": "Actual command to create an index with STAR",
+    "text": "Actual command to create an index with STAR\nAfter the header comes the actual command we want to run.\nSTAR is a fast splice-aware read alignment program. Designed specifically for mapping RNA-seq reads. Cited some cool 38k times since 2013.\nOther alternatives: HISAT2, Kallisto, Salmon\n\n\nSTAR --runThreadN 12 --runMode genomeGenerate --genomeDir /home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/stargenome --genomeFastaFiles /home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/mm10.fa  --sjdbGTFfile /home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/gencode.vM1.annotation.gtf --sjdbOverhang 74\n\n\nSTAR manual\n\nrunThreadN: running 12 cores in parallel\n\nrunMode: creating an index\n\ngenomeDir: where the output (index) will go\n\ngenomeFastaFiles: path to our reference genome\n\nsjdbGTFfile: path to our gene annotation\n\nsjdbOverhang: read length - 1"
   }
 ]

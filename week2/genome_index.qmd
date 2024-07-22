@@ -43,85 +43,6 @@ include-in-header:
 
 ::::
 
-## Setup
-
-::: {.big-code}
-
-```{bash}
-# This is a comment; it does not get executed.
-# Log in to Graham
-ssh skim823@graham.computecanada.ca
-```  
-<br>
-```{bash}
-# Remember where we downloaded our files?
-cd /home/$USER/project/$USER/workshop
-pwd # Check where we are
-```
-
-:::
-
-## Unzipping
-
-Our files are `gz`ipped (compressed). So they have to be un-zipped with `gzip`.  
-
-::: {.big-code}
-
-```{bash}
-gzip --help
-```
-<br>
-```{bash}
-gzip -c mm10.fa.gz
-gzip -c gencode.vM1.annotation.gtf.gz
-# Are the files there?
-ls -l
-```
-
-:::
-
-::: {.callout-tip}
-
--  Use `--help` or `-h` to see a help menu  
--  Use `--version` or `-v` to see if the program is even loaded
-
-:::
-
-## Log in vs. compute node
-
--  When we `ssh` into `graham`, we are at a **log in** node  
--  To run computationally heavy stuff like indexing a genome, 
-we need to submit it as a job to a **compute** node  
-    -  or else it will take forever
--  What about the `gzip` thing just now? It's okay for a log in node 
--  We need to write a text file describing our command, then submit it to `slurm`  
-    -  `slurm` is a program running on the HPC that manages our requests
-
-## A `slurm` job script header
-
-::: {.big-code}
-
-```{bash}
-#!/bin/bash
-#SBATCH --account=$SLURM_ACCOUNT
-#SBATCH --time=1:00:00
-#SBATCH --cpus-per-task=12
-#SBATCH --mem-per-cpu=16G
-#SBATCH --job-name=STAR_index
-#SBATCH --output=%x.%j.out
-#SBATCH --error=%x.%j.err
-```
-
-:::
-
-These lines outline the resources we are requesting:  
-
--   line 1: a "shebang" line that indicates this is a `bash` script (mandatory)  
--   line 2: our group account name (mandatory)  
--   lines 3-5: we are asking for 12 CPUs, 16G RAM each for 1 hr total  
-    -   If our job is not done within 1 hr, tough luck. It will just terminate. 
--   lines 6-8: many programs spit out some metadata about what it's doing and if anything is going wrong into `stdout` and `stderr`, respectively. Custom names for these files.
-
 ## Setting our $SLURM_ACCOUNT
 
 Let's set our $SLURM_ACCOUNT `environment variable` so that you can copy & paste code.  
@@ -151,7 +72,106 @@ echo $SLURM_ACCOUNT
 
 :::
 
-## Indexing with `STAR`
+## Setup
+
+::: {.big-code}
+
+```{bash}
+# This is a comment; it does not get executed.
+# Log in to Graham
+ssh skim823@graham.computecanada.ca
+```  
+<br>
+```{bash}
+# Remember where we downloaded our files?
+cd /home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop
+pwd # Check where we are
+```
+
+:::
+
+## Unzipping
+
+Our files are `gz`ipped (compressed). So they have to be un-zipped with `gunzip`.  
+
+::: {.big-code}
+
+```{bash}
+gunzip --help
+```
+<br>
+```{bash}
+gunzip -c mm10.fa.gz > ./mm10.fa
+gunzip -c gencode.vM1.annotation.gtf.gz > ./gencode.vM1.annotation.gtf
+# Are the files there?
+ls -l
+```
+
+:::
+
+::: {.callout-tip}
+
+-  Use `--help` or `-h` to see a help menu  
+-  Use `--version` or `-v` to see if the program is even loaded
+
+:::
+
+## Log in vs. compute node
+
+-  When we `ssh` into `graham`, we are at a **log in** node  
+-  To run computationally heavy stuff like indexing a genome, 
+we need to submit it as a job to a **compute** node  
+    -  or else it will take forever
+-  What about the `gunzip` thing just now? It's okay for a log in node 
+-  We need to write a text file (`job script`) describing our command, then submit it to `slurm`  
+    -  `slurm` is a program running on the HPC that manages our requests
+
+## Create and save a job script text file with `nano`
+
+
+`nano` is a built-in text editor. Use the arrow keys to navigate.
+
+::: big-code
+
+```{bash}
+nano index.sh
+```
+:::
+
+Paste in the full job script, save with `ctrl/cmd + x`, hit `y` to "Save modified buffer", and hit `enter` to confirm "File Name to Write".
+
+But what's in a job script?
+
+## A `slurm` job script header
+
+::: {.big-code}
+
+```{bash}
+#!/bin/bash
+#SBATCH --account=$SLURM_ACCOUNT
+#SBATCH --time=1:00:00
+#SBATCH --cpus-per-task=12
+#SBATCH --mem-per-cpu=16G
+#SBATCH --job-name=STAR_index
+#SBATCH --output=%x.%j.out
+#SBATCH --error=%x.%j.err
+```
+
+:::
+
+These lines outline the resources we are requesting:  
+
+-   line 1: a "shebang" line that indicates this is a `bash` script (mandatory)  
+-   line 2: our group account name (mandatory)  
+-   lines 3-5: we are asking for 12 CPUs, 16G RAM each for 1 hr total  
+    -   If our job is not done within 1 hr, tough luck. It will just terminate. 
+-   lines 6-8: many programs spit out some metadata about what it's doing and if anything is going wrong into `stdout` and `stderr`, respectively. Custom names for these files.
+
+
+
+## Actual command to create an index with `STAR`
+
+**After** the header comes the actual command we want to run.
 
 [`STAR`](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3530905/) is a fast splice-aware read alignment program. Designed specifically for mapping RNA-seq reads. Cited some cool 38k times since 2013.  
 
@@ -160,7 +180,7 @@ Other alternatives: [HISAT2](https://www.nature.com/articles/s41587-019-0201-4),
 ::: big-code
 
 ```{bash}
-STAR --runThreadN 12 --runMode genomeGenerate --genomeDir /home/$USER/project/$USER/workshop/stargenome --genomeFastaFiles /home/$USER/project/$USER/workshop/mm10.fa  --sjdbGTFfile /home/$USER/project/$USER/workshop/gencode.vM1.annotation.gtf --sjdbOverhang 74
+STAR --runThreadN 12 --runMode genomeGenerate --genomeDir /home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/stargenome --genomeFastaFiles /home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/mm10.fa  --sjdbGTFfile /home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/gencode.vM1.annotation.gtf --sjdbOverhang 74
 ```
 
 :::
@@ -190,30 +210,18 @@ STAR --runThreadN 12 --runMode genomeGenerate --genomeDir /home/$USER/project/$U
 
 STAR --runThreadN 12 --runMode genomeGenerate \
 --genomeDir \
-/home/$USER/project/$USER/workshop/stargenome \
+/home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/stargenome \
 --genomeFastaFiles \
-/home/$USER/project/$USER/workshop/mm10.fa \
+/home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/mm10.fa \
 --sjdbGTFfile \
-/home/$USER/project/$USER/workshop/gencode.vM1.annotation.gtf \
+/home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/gencode.vM1.annotation.gtf \
 --sjdbOverhang 74
 ```
 
 :::
 
 
-## Create and save a job script text file with `nano`
 
-
-`nano` is a built-in text editor. Use the arrow keys to navigate.
-
-::: big-code
-
-```{bash}
-nano index.sh
-```
-:::
-
-Paste in the full job script, save with `ctrl/cmd + x`, hit `y` to "Save modified buffer", and hit `enter` to confirm "File Name to Write".
 
 
 ## Loading `STAR` with `module`

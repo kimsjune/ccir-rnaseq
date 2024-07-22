@@ -135,7 +135,8 @@ ssh skim823@graham.computecanada.ca
 
 -  Prompts you with "are you sure blah blah?"; type `yes`
 -  Prompts with your password; what you type is invisible for security  
--  Prompts you with MFA (*annoying*)  
+-  Prompts you with MFA (*annoying*)
+   -  press `1` or `enter` to proceed to MFA without any delay
 
 
 ## Linux terminal basics

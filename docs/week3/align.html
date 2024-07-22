@@ -473,8 +473,8 @@ Joon Kim
 <h2>Alignment command</h2>
 <div class="big-code">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="ex">STAR</span> <span class="at">--runThreadN</span> 4 <span class="at">--genomeDir</span> /home/<span class="va">$USER</span>/project/<span class="va">$USER</span>/workshop/stargenome <span class="dt">\</span></span>
-<span id="cb3-2"><a></a>--readFilesIn /home/<span class="va">$USER</span>/project/<span class="va">$USER</span>/workshop/cat/DKO_D1.fastq.gz <span class="dt">\</span></span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="ex">STAR</span> <span class="at">--runThreadN</span> 4 <span class="at">--genomeDir</span> /home/<span class="va">$USER</span>/projects/<span class="va">$SLURM_ACCOUNT</span>/<span class="va">$USER</span>/workshop/stargenome <span class="dt">\</span></span>
+<span id="cb3-2"><a></a>--readFilesIn /home/<span class="va">$USER</span>/projects/<span class="va">$SLURM_ACCOUNT</span>/<span class="va">$USER</span>/workshop/cat/DKO_D1.fastq.gz <span class="dt">\</span></span>
 <span id="cb3-3"><a></a>--outSAMtype BAM SortedByCoordinate <span class="at">--readFilesCommand</span> zcat <span class="dt">\</span></span>
 <span id="cb3-4"><a></a>--outFileNamePrefix ./DKO_D1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -503,8 +503,8 @@ Joon Kim
 <span id="cb4-7"><a></a><span class="co">#SBATCH --output=%x.%j.out</span></span>
 <span id="cb4-8"><a></a><span class="co">#SBATCH --error=%x.%j.err</span></span>
 <span id="cb4-9"><a></a></span>
-<span id="cb4-10"><a></a><span class="ex">STAR</span> <span class="at">--runThreadN</span> 4 <span class="at">--genomeDir</span> /home/<span class="va">$USER</span>/project/<span class="va">$USER</span>/workshop/stargenome <span class="dt">\</span></span>
-<span id="cb4-11"><a></a>--readFilesIn /home/<span class="va">$USER</span>/project/<span class="va">$USER</span>/workshop/cat/DKO_D1.fastq.gz <span class="dt">\</span></span>
+<span id="cb4-10"><a></a><span class="ex">STAR</span> <span class="at">--runThreadN</span> 4 <span class="at">--genomeDir</span> /home/<span class="va">$USER</span>/projects/<span class="va">$SLURM_ACCOUNT</span>/<span class="va">$USER</span>/workshop/stargenome <span class="dt">\</span></span>
+<span id="cb4-11"><a></a>--readFilesIn /home/<span class="va">$USER</span>/projects/<span class="va">$SLURM_ACCOUNT</span>/<span class="va">$USER</span>/workshop/cat/DKO_D1.fastq.gz <span class="dt">\</span></span>
 <span id="cb4-12"><a></a>--outSAMtype BAM SortedByCoordinate <span class="at">--readFilesCommand</span> zcat <span class="dt">\</span></span>
 <span id="cb4-13"><a></a>--outFileNamePrefix ./DKO_D1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>

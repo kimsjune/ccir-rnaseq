@@ -93,8 +93,8 @@ cat ./DKO_G3_L001/* ./DKO_G3_L002/* ./DKO_G3_L003/* ./DKO_G3_L004/* > ./DKO_G3.f
 ::: big-code
 
 ```{bash}
-STAR --runThreadN 4 --genomeDir /home/$USER/project/$USER/workshop/stargenome \
---readFilesIn /home/$USER/project/$USER/workshop/cat/DKO_D1.fastq.gz \
+STAR --runThreadN 4 --genomeDir /home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/stargenome \
+--readFilesIn /home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/cat/DKO_D1.fastq.gz \
 --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat \
 --outFileNamePrefix ./DKO_D1
 ```
@@ -122,8 +122,8 @@ STAR --runThreadN 4 --genomeDir /home/$USER/project/$USER/workshop/stargenome \
 #SBATCH --output=%x.%j.out
 #SBATCH --error=%x.%j.err
 
-STAR --runThreadN 4 --genomeDir /home/$USER/project/$USER/workshop/stargenome \
---readFilesIn /home/$USER/project/$USER/workshop/cat/DKO_D1.fastq.gz \
+STAR --runThreadN 4 --genomeDir /home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/stargenome \
+--readFilesIn /home/$USER/projects/$SLURM_ACCOUNT/$USER/workshop/cat/DKO_D1.fastq.gz \
 --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat \
 --outFileNamePrefix ./DKO_D1
 ```
