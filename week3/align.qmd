@@ -3,7 +3,7 @@ title: A primer on RNA-seq analysis
 subtitle: "Week 3: Aligning reads to the genome"
 from: markdown+emoji
 author: Joon Kim 
-date: "2024-06-15"
+date: "2024-01-27"
 format: 
   revealjs:
     scrollable: true
