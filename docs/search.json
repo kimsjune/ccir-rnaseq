@@ -229,5 +229,19 @@
     "title": "A primer on RNA-seq analysis",
     "section": "HPCs vs Cloud",
     "text": "HPCs vs Cloud\nThese HPCs are free like free beer, but you often have to wait for your stuff to run.\n\nWait time depends on usage (CPUs, time, memory). slurm keeps track of these.\n\nYou’d want to avoid wasteful usage. You can check efficiency by running seff JOBID.\n\nslurm documentation\n\nFrequently used commands: sbatch, sq, sacct -b, seff\n\nOn the other hand, cloud services (AWS, Azure, GCP) have no wait times, but functionally not free."
+  },
+  {
+    "objectID": "docs/index.html",
+    "href": "docs/index.html",
+    "title": "CCIR 2024 Bioinformatics",
+    "section": "",
+    "text": "Below you will find all the links to slides for a series of workshops on RNA-seq analysis.\n\n\nSlides\n\n\n\nSlides\n\n\n\nSlides"
+  },
+  {
+    "objectID": "docs/index.html#about",
+    "href": "docs/index.html#about",
+    "title": "CCIR 2024 Bioinformatics",
+    "section": "",
+    "text": "Below you will find all the links to slides for a series of workshops on RNA-seq analysis.\n\n\nSlides\n\n\n\nSlides\n\n\n\nSlides"
   }
 ]
